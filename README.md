@@ -3,7 +3,7 @@
 P #04: Viz not to be confused with vis or vis-a-vis
 
 ## Project Description
-Source: [Video Game Sales With Ratings](https://www.kaggle.com/rush4ratio/video-game-sales-with-ratings) . 
+Source: [Video Game Sales With Ratings](https://www.kaggle.com/rush4ratio/video-game-sales-with-ratings) .   
 This dataset contains a list of video games with sales greater than 100,000 copies. There are fields such as the rank, genre, publisher, and sales in North America, Europe, Japan, and the rest of the world. This data set is sure to bring back some nostalgia, as it contains almost every game from the first ever Super Mario Bros to Fifa 15. It’ll be interesting to compare ratings and sales of some of your favorite games! 
 ## How We Aim to Make This Data Come Alive 
 The data that will be shown without user interaction will consist of pie charts for the platforms, year of release, genres, publishers, and ESRB ratings(E.g. Everyone, Teen, Adults Only..etc) of the games. We plan to also have pie charts that the user can hover over to get a list of games by that publisher, genre, etc. When a game is hovered over, the critic scores and a bar graph of the game’s sales will be shown. Our visualizations will allow the user to explore questions that involve sales like: “How do the sales of this game in North America compare to the sales of the game in Europe?” or “What game had the higher Critic Score but a lower User Score?” Questions that our data will provoke will most likely have to do with more abstract relationships between fields like whether or not scores given by users or metacritics have to do with how well a game sells and how games made in different eras compare with each other.
