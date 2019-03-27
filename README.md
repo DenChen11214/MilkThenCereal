@@ -12,3 +12,4 @@ The user will first select the basic categorization of the pie chart similar to 
 The user would also be allowed to click on the game, permanently highlighting the game and its section and fixing the specific info displayed in the bar graph. The user would then be able to hover over any other game in other sections and compare its specific data with the one already selected. The differences in the sales will be noticeable with different colored bars in the bar graph and the scores would be displayed separately for the user to see.  
 After a user is done comparing or wishes to selected another game, he/she can press the reset button, which will highlight any of the previously selected games.  
 ## Sketch-up of Envisioned Visualization
+![alt text](https://github.com/DenChen11214/MilkThenCereal/blob/master/diagram.jpg?raw=true)
