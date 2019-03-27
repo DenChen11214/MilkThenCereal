@@ -1,10 +1,10 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 MilkThenCereal
-dennis chen
-robin han
-bill ni 
-kevin lin
-pd 7
+Dennis Chen
+Robin Han
+Bill Ni 
+Kevin Lin
+Pd 7
 ---------------------
  ______   ______   __   __   __       ______   _______
 /_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\
