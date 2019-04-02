@@ -1,12 +1,9 @@
-$(function() {
+var filename = 'data/VideoGameSales.csv';
 
-    var donutData = genData();
-
-    var donuts = new DonutCharts();
-    donuts.create(donutData);
-
+d3.csv(filename).then( function(data) {
+  var donuts = new DonutCharts();
+  donuts.create(data);
 });
-
 
 function DonutCharts() {
 
