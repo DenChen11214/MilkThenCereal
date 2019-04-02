@@ -20,3 +20,7 @@ hanR -- 2019-3-26 22:47
 --------------------------------------------------------------
 Updated README.md with plan on how we are going to execute and display our data set and uploaded visualization diagram. 
 ==============================================================
+dennisC -- 2019-04-01 20:30
+--------------------------------------------------------------
+- Added the launch code for the readme and added requirements.txt
+==============================================================
