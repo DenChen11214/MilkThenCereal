@@ -13,3 +13,30 @@ The user would also be allowed to click on the game, permanently highlighting th
 After a user is done comparing or wishes to selected another game, he/she can press the reset button, which will highlight any of the previously selected games.  
 ## Sketch-up of Envisioned Visualization
 ![alt text](https://github.com/DenChen11214/MilkThenCereal/blob/master/diagram.jpg?raw=true)
+## Launch Code
+1. Clone the repository:
+
+    ```
+    $ git clone https://github.com/DenChen11214/MilkThenCereal.git
+    ```
+2. Create your virtual environment. Replace <VENV> with the name of your virtual environment
+  
+    ```
+    $ python3 -m venv <VENV>
+    ```
+3. Activate the virtual environment by typing ```$ . PATH_TO_VENV/bin/activate``` in the terminal. Make sure you are in the directory which contains the virtual environment. To check, type in ```ls``` to get a current listing of the files in your current working directory.  
+
+4. Install the dependencies with [requirements.txt](requirements.txt) by running the following command  
+
+    ```
+    pip install -r requirements.txt
+    ```
+5. Change into the repo (```cd MilkThenCereal```)and run the python file by typing ```$ python app.py``` in the terminal.
+6. If successful, the following message will appear in the terminal:
+```
+* Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+* Restarting with stat
+* Debugger is active!
+* Debugger PIN: 248-748-502
+```
+7. Open your web browser and open localhost:5000
