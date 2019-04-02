@@ -19,10 +19,10 @@ After a user is done comparing or wishes to selected another game, he/she can pr
     ```
     $ git clone https://github.com/DenChen11214/MilkThenCereal.git
     ```
-2. Create your virtual environment. Replace <VENV> with the name of your virtual environment
+2. Create your virtual environment. Replace VENV with the name of your virtual environment
   
     ```
-    $ python3 -m venv <VENV>
+    $ python3 -m venv VENV
     ```
 3. Activate the virtual environment by typing ```$ . PATH_TO_VENV/bin/activate``` in the terminal. Make sure you are in the directory which contains the virtual environment. To check, type in ```ls``` to get a current listing of the files in your current working directory.  
 
