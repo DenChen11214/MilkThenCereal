@@ -114,18 +114,12 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
       .style("fill", function(d,i) { return color(region[i]) })
       .attr("y", function(d) { return y(0); })
       .attr("height", function(d) { return height - y(0); })
-      .on("mouseover", function(d,i) {
-          d3.select(this).style("fill", d3.rgb(color(region[i])).darker(2));
-      })
-      .on("mouseout", function(d,i) {
-          d3.select(this).style("fill", color(region[i]));
-      })
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide);
   slice.selectAll("rect")
-      .transition()
-      .delay(function (d) {return Math.random()*1000;})
-      .duration(1000)
+      // .transition()
+      // .delay(function (d) {return Math.random()*1000;})
+      // .duration(1000)
       .attr("y", function(d,i) {
       for(value in d){
         sales = d[value]
@@ -144,9 +138,8 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
     dict[value] = sample[value]
     sales.push(dict)
   }
-  console.log(sales)
   var legend = svg.selectAll(".legend")
-      .data(sales.map(function(d,i) { return region[i]; }).reverse())
+      .data(sales.map(function(d,i) { return region[i]; }))
   .enter().append("g")
       .attr("class", "legend")
       .attr("transform", function(d,i) { return "translate(0," + i * 20 + ")"; })
@@ -164,5 +157,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
       .attr("dy", ".35em")
       .style("text-anchor", "end")
       .text(function(d) {return d; });
-  legend.transition().delay(function(d,i){ return 1300 + 100 * i; }).style("opacity","1");
+//  legend.transition().delay(function(d,i){ return 1300 + 100 * i; }).style("opacity","1");
+  legend.style("opacity","1");
+
 });
