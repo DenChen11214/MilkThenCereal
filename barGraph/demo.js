@@ -22,7 +22,10 @@ var tip = d3.tip()
   .attr('class', 'd3-tip')
   .offset([-10, 0])
   .html(function(d) {
-    return "<strong>Global Sales:</strong> <span style='color:red'>" + d.values.Global_Sales + "</span>";
+    for(value in d){
+      sales = d[value]
+    }
+    return "<strong>Sales:</strong> <span style='color:red'>" + sales + "</span>";
   })
 
 var color = d3.scale.ordinal()
@@ -82,7 +85,7 @@ d3.csv("VideoGameSales.csv", function(error, data) {
       .attr("y", -15)
       .attr("font-size","16px")
       .style("text-anchor", "middle")
-      .text("Sales");
+      .text("Sales(Millions)");
   svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
@@ -116,7 +119,9 @@ d3.csv("VideoGameSales.csv", function(error, data) {
       })
       .on("mouseout", function(d,i) {
           d3.select(this).style("fill", color(region[i]));
-      });
+      })
+      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide);
   slice.selectAll("rect")
       .transition()
       .delay(function (d) {return Math.random()*1000;})
