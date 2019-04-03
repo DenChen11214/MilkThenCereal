@@ -39,7 +39,7 @@ var svg = d3.select("body").append("svg")
 
 svg.call(tip);
 
-d3.csv("VideoGameSales.csv", function(error, data) {
+d3.csv("/data/VideoGameSales.csv", function(error, data) {
   var nested_data = d3.nest()
     .key(function(d) { return d.Genre; })
     .rollup(function(leaves) {

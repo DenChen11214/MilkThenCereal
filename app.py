@@ -7,7 +7,7 @@ app.config['SECRET_KEY'] = os.urandom(32)
 
 @app.route("/")
 def root():
-    return render_template("index.html")
+    return render_template("demo.html")
 
 @app.route("/data/VideoGameSales.csv")
 def returndata():
