@@ -117,9 +117,9 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide);
   slice.selectAll("rect")
-      // .transition()
-      // .delay(function (d) {return Math.random()*1000;})
-      // .duration(1000)
+      .transition()
+      .delay(function (d) {return Math.random()*1000;})
+      .duration(1000)
       .attr("y", function(d,i) {
       for(value in d){
         sales = d[value]
@@ -157,7 +157,6 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
       .attr("dy", ".35em")
       .style("text-anchor", "end")
       .text(function(d) {return d; });
-//  legend.transition().delay(function(d,i){ return 1300 + 100 * i; }).style("opacity","1");
-  legend.style("opacity","1");
+  legend.transition().delay(function(d,i){ return 1300 + 100 * i; }).style("opacity","1");
 
 });
