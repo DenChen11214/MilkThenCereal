@@ -1,6 +1,8 @@
 var filename = 'data/VideoGameSales.csv';
+var salesData;
 
-d3.csv(filename).then( function(data) {
+d3.csv(filename, function(error, data) {
+  salesData = data;
   var donuts = new DonutCharts();
   donuts.create(data);
 });
@@ -12,31 +14,19 @@ function DonutCharts() {
     var chart_m,
         chart_r,
         color = function(i){
-            if(i == 0){
-                return "#790604";
-            }else if(i == 1){
-                return "#ff0800";
-            }else if(i == 2){
-                return "#b3446c";
-            }else if(i == 3){
-                return "#965a3e";
-            }else if(i == 4){
-                return "#4f86f7";
-            }else if(i == 5){
-                return "#bfff00";
-            }else{
-                return "#ff7518";
-            }
+            var randomColor = "#" + Math.floor(Math.random()*16777215).toString(16);
+            return randomColor;
         };
 
     var getCatNames = function(dataset) {
-        var catNames = new Array();
+        var catNames = new Set();
 
-        for (var i = 0; i < dataset[0].data.length; i++) {
-            catNames.push(dataset[0].data[i].cat);
+        for (let i of dataset) {
+          catNames.add(i['Platform']);
         }
 
-        return catNames;
+        console.log(catNames);
+        return Array.from(catNames);
     }
 
     var createLegend = function(catNames) {
@@ -220,7 +210,11 @@ function DonutCharts() {
         var paths = charts.selectAll('.donut')
                         .selectAll('path')
                         .data(function(d, i) {
-                            return pie(d.data);
+                            var currDat = [{
+                              'cat' : d.Platform,
+                              'val' : parseInt(d.NA_Sales)
+                            }]
+                            return pie(currDat);
                         });
 
         paths

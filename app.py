@@ -9,6 +9,10 @@ app.config['SECRET_KEY'] = os.urandom(32)
 def root():
     return render_template("demo.html")
 
+@app.route('/donut')
+def donut():
+    return render_template('index.html')
+
 @app.route("/data/VideoGameSales.csv")
 def returndata():
     dataFile = open('data/VideoGameSales.csv','r')
