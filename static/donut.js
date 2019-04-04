@@ -6,6 +6,7 @@ d3.csv(filename, function(error, data) {
   var donuts = new DonutCharts();
   donuts.create(data);
 });
+//////////////////////////////////////////////////////////////////////
 
 function DonutCharts() {
 
@@ -35,7 +36,7 @@ function DonutCharts() {
                             .data(catNames)
                         .enter().append('g')
                             .attr('transform', function(d, i) {
-                                return 'translate(' + (i * 150 + 50) + ', 10)';
+                                return 'translate(' + (i * 80 + 50) + ', 10)';
                             });
 
         legends.append('circle')
@@ -124,7 +125,8 @@ function DonutCharts() {
     var resetAllCenterText = function() {
         charts.selectAll('.value')
             .text(function(d) {
-                return d.total.toFixed(1) + d.unit;
+                return 'hello';
+                //d.total.toFixed(1) + d.unit;
             });
         charts.selectAll('.percentage')
             .text('');
@@ -259,7 +261,6 @@ function DonutCharts() {
 
         createLegend(getCatNames(dataset));
         createCenter();
-
         updateDonut();
     }
 
@@ -270,38 +271,4 @@ function DonutCharts() {
 
         updateDonut();
     }
-}
-
-
-/*
- * Returns a json-like object.
- */
-function genData() {
-    var type = ['Votes'];
-    var unit = [''];
-    var cat = ['Cherry', 'Apple', 'Coconut', 'Raspberry', 'Blueberry', 'Key Lime', 'Pumpkin'];
-
-    var dataset = new Array();
-
-    for (var i = 0; i < type.length; i++) {
-        var data = new Array();
-        var total = 0;
-
-        for (var j = 0; j < cat.length; j++) {
-            var value = Math.floor(Math.random()*100*(3-i)) + 15;
-            total += value;
-            data.push({
-                "cat": cat[j],
-                "val": value
-            });
-        }
-
-        dataset.push({
-            "type": type[i],
-            "unit": unit[i],
-            "data": data,
-            "total": total
-        });
-    }
-    return dataset;
 }
