@@ -7,36 +7,31 @@ d3.csv(filename, function(error, data) {
   donuts.create(data);
 });
 //////////////////////////////////////////////////////////////////////
-
 function DonutCharts() {
-
     var charts = d3.select('#donut-charts');
-
     var chart_m,
         chart_r,
         color = function(i){
             var randomColor = "#" + Math.floor(Math.random()*16777215).toString(16);
             return randomColor;
         };
-
     var getCatNames = function(dataset) {
         var catNames = new Set();
-
         for (let i of dataset) {
-          catNames.add(i['Platform']);
+          catNames.add(i['Genre']);
         }
-
         console.log(catNames);
         return Array.from(catNames);
     }
-
+//////////////////////////////////////////////////////////////
+// LEGEND ON TOP
     var createLegend = function(catNames) {
         var legends = charts.select('.legend')
                         .selectAll('g')
                             .data(catNames)
                         .enter().append('g')
                             .attr('transform', function(d, i) {
-                                return 'translate(' + (i * 80 + 50) + ', 10)';
+                                return 'translate(' + (i * 150 + 50) + ', 10)';
                             });
 
         legends.append('circle')
@@ -53,16 +48,15 @@ function DonutCharts() {
                 return d;
             });
     }
-
+//////////////////////////////////////////////////////////////
+// INTERACTIVE WITH PIE CHART CENTER AND TRANSITIONS
     var createCenter = function(pie) {
-
         var eventObj = {
             'mouseover': function(d, i) {
                 d3.select(this)
                     .transition()
                     .attr("r", chart_r * 0.65);
             },
-
             'mouseout': function(d, i) {
                 d3.select(this)
                     .transition()
@@ -70,7 +64,6 @@ function DonutCharts() {
                     .ease('bounce')
                     .attr("r", chart_r * 0.6);
             },
-
             'click': function(d, i) {
                 var paths = charts.selectAll('.clicked');
                 pathAnim(paths, 0);
@@ -78,22 +71,20 @@ function DonutCharts() {
                 resetAllCenterText();
             }
         }
-
         var donuts = d3.selectAll('.donut');
-
         // The circle displaying total data.
         donuts.append("svg:circle")
             .attr("r", chart_r * 0.6)
             .style("fill", "#E7E7E7")
             .on(eventObj);
-
         donuts.append('text')
                 .attr('class', 'center-txt type')
+                //.attr('y', chart_r * -0.16)
                 .attr('y', chart_r * -0.16)
                 .attr('text-anchor', 'middle')
                 .style('font-weight', 'bold')
                 .text(function(d, i) {
-                    return d.type;
+                    return d.Platform;
                 });
         donuts.append('text')
                 .attr('class', 'center-txt value')
@@ -103,13 +94,13 @@ function DonutCharts() {
                 .attr('y', chart_r * 0.16)
                 .attr('text-anchor', 'middle')
                 .style('fill', '#A2A2A2');
+        console.log("center should have been created");
     }
 
     var setCenterText = function(thisDonut) {
         var sum = d3.sum(thisDonut.selectAll('.clicked').data(), function(d) {
             return d.data.val;
         });
-
         thisDonut.select('.value')
             .text(function(d) {
                 return (sum)? sum.toFixed(1) + d.unit
@@ -121,17 +112,15 @@ function DonutCharts() {
                             : '';
             });
     }
-
     var resetAllCenterText = function() {
         charts.selectAll('.value')
             .text(function(d) {
-                return 'hello';
+                return '';
                 //d.total.toFixed(1) + d.unit;
             });
         charts.selectAll('.percentage')
             .text('');
     }
-
     var pathAnim = function(path, dir) {
         switch(dir) {
             case 0:
@@ -143,7 +132,6 @@ function DonutCharts() {
                         .outerRadius(chart_r)
                     );
                 break;
-
             case 1:
                 path.transition()
                     .attr('d', d3.svg.arc()
@@ -153,14 +141,12 @@ function DonutCharts() {
                 break;
         }
     }
-
+    // INTERACTIVE WITH INNER PIE CHART CIRCLE CODE
+/////////////////////////////////////////////////////////
     var updateDonut = function() {
-
         var eventObj = {
-
             'mouseover': function(d, i, j) {
                 pathAnim(d3.select(this), 1);
-
                 var thisDonut = charts.select('.type' + j);
                 thisDonut.select('.value').text(function(donut_d) {
                     return d.data.val.toFixed(1) + donut_d.unit;
@@ -169,7 +155,6 @@ function DonutCharts() {
                     return (d.data.val/donut_d.total*100).toFixed(2) + '%';
                 });
             },
-
             'mouseout': function(d, i, j) {
                 var thisPath = d3.select(this);
                 if (!thisPath.classed('clicked')) {
@@ -178,7 +163,6 @@ function DonutCharts() {
                 var thisDonut = charts.select('.type' + j);
                 setCenterText(thisDonut);
             },
-
             'click': function(d, i, j) {
                 var thisDonut = charts.select('.type' + j);
 
@@ -194,28 +178,27 @@ function DonutCharts() {
                 setCenterText(thisDonut);
             }
         };
-
         var pie = d3.layout.pie()
                         .sort(null)
                         .value(function(d) {
                             return d.val;
                         });
-
         var arc = d3.svg.arc()
                         .innerRadius(chart_r * 0.7)
                         .outerRadius(function() {
                             return (d3.select(this).classed('clicked'))? chart_r * 1.08
                                                                        : chart_r;
                         });
-
-        // Start joining data with paths
+///////////////////////////////////////////////////
+        //READING CSV FILE ************************
         var paths = charts.selectAll('.donut')
                         .selectAll('path')
                         .data(function(d, i) {
                             var currDat = [{
                               'cat' : d.Platform,
-                              'val' : parseInt(d.NA_Sales)
+                              'val' : d.Name
                             }]
+                            //console.log(currDat);
                             return pie(currDat);
                         });
 
@@ -237,11 +220,13 @@ function DonutCharts() {
 
         resetAllCenterText();
     }
-
+//////////////////////////////////////////////////////////////////
+//ACTUAL CREATION OF DONUT
     this.create = function(dataset) {
+        console.log("making it rn");
         var $charts = $('#donut-charts');
-        chart_m = $charts.innerWidth() / dataset.length / 2 * 0.07;
-        chart_r = $charts.innerWidth() / dataset.length / 2 * 0.425;
+        chart_m = $charts.innerWidth() / dataset.length / 2 * 100;
+        chart_r = $charts.innerWidth() / dataset.length / 2 * 100;
 
         charts.append('svg')
             .attr('class', 'legend')
@@ -260,14 +245,16 @@ function DonutCharts() {
                         .attr('transform', 'translate(' + (chart_r+chart_m) + ',' + (chart_r+chart_m) + ')');
 
         createLegend(getCatNames(dataset));
+        // ^ is done but bottom steps aren't run
         createCenter();
         updateDonut();
+        console.log("yep im done");
     }
 
     this.update = function(dataset) {
         // Assume no new categ of data enter
         var donut = charts.selectAll(".donut")
-                    .data(dataset);
+                          .data(dataset);
 
         updateDonut();
     }
