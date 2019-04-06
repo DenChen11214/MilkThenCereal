@@ -156,8 +156,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
   legend.transition().delay(function(d,i){ return 1300 + 100 * i; }).style("opacity","1");
 
   var updateSlice = function(data) {
-
-    var xVar = nested_data.map(function(d){return d.key});
+    var xVar = data.map(function(d){ return d.key});
     x.domain(xVar);
     x1.domain(region).rangeRoundBands([0,x.rangeBand()]);
     y.domain([0, d3.max(data, function(d) {
@@ -202,12 +201,13 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
     xAxisUpdate.call(xAxis);
 
     sales = []
-    sample = nested_data[0]["values"]
+    sample = data[0]["values"]
     for(value in sample){
       var dict = {};
       dict[value] = sample[value]
       sales.push(dict)
     }
+    d3.selectAll(".slice").remove();
     var slice = svg.selectAll(".slice").data(data)
     slice
       .enter().append("g")
