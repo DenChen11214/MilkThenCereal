@@ -42,3 +42,7 @@ dennisC -- 2019-04-02 20:40
 - Created a grouped bar graph of sales vs genre with different bars for each region
 - Made it so that when a bar is hovered over, the number of sales is shown
 ==============================================================
+linK -- 2019-04-04 13:17
+--------------------------------------------------------------
+- Work on donut conversion
+==============================================================
