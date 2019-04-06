@@ -3,8 +3,35 @@ var salesData;
 
 d3.csv(filename, function(error, data) {
   salesData = data;
+  //Data reorganization
+  var platDct = {
+    'type' : 'Votes',
+    'unit' : 'Games',
+    'data' : {},
+    'total' : 0
+  };
+  for (let i of data) {
+    if (!(i.Platform in platDct['data'])) {
+      platDct['data'][i.Platform] = {
+        'games' : [],
+        'cat' : i.Platform,
+        'val' : 0
+      };
+    }
+    //console.log(platDct[data.Platform]['games']);
+    platDct['data'][i.Platform]['games'].push(i);
+    platDct['data'][i.Platform]['val'] += parseFloat(i.Global_Sales);
+  }
+  var datLst = [];
+  for (let i of Object.keys(platDct.data)) {
+    platDct['total'] += platDct['data'][i]['val'];
+    datLst.push(platDct['data'][i]);
+  }
+  platDct['data'] = datLst;
+  platDct = [platDct];
+  console.log(platDct);
   var donuts = new DonutCharts();
-  donuts.create(data);
+  donuts.create(platDct);
 });
 //////////////////////////////////////////////////////////////////////
 function DonutCharts() {
@@ -16,12 +43,13 @@ function DonutCharts() {
             return randomColor;
         };
     var getCatNames = function(dataset) {
-        var catNames = new Set();
-        for (let i of dataset) {
-          catNames.add(i['Genre']);
+        var catNames = new Array();
+
+        for (var i = 0; i < dataset[0].data.length; i++) {
+            catNames.push(dataset[0].data[i].cat);
         }
-        console.log(catNames);
-        return Array.from(catNames);
+
+        return catNames;
     }
 //////////////////////////////////////////////////////////////
 // LEGEND ON TOP
