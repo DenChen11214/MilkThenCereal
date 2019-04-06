@@ -50,3 +50,7 @@ linK -- 2019-04-06 16:56
 --------------------------------------------------------------
 - Changed how donut.js handles the csv file to fit with previous code
 ==============================================================
+dennisC -- 2019-04-06 19:38
+--------------------------------------------------------------
+- Made it so that the x-axis is customizable and had the graph change accordingly.
+- The position of the bars when a new x-axis is chosen
