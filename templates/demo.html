@@ -45,6 +45,18 @@ body {
 </style>
 <body>
     <center><h1>Customizable Bar Graph</h1>
+      <h3> Choose a Category to See Sales For </h3>
+      <select id="indVar">
+        <option value="Genre">Genre</option>
+        <option value="Publisher">Publisher</option>
+        <option value="Year">Year of Release</option>
+        <option value="Developer">Developer</option>
+        <option value="Rating">ESRB Rating</option>
+        <option value="Platform">Platform</option>
+        <option value="Critic">Metacritic Score</option>
+      </select><br><br>
+      <button id = "change"> Submit </button>
+    </center>
     <div id="Bar Graph"></div></center>
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
