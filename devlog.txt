@@ -42,6 +42,10 @@ dennisC -- 2019-04-02 20:40
 - Created a grouped bar graph of sales vs genre with different bars for each region
 - Made it so that when a bar is hovered over, the number of sales is shown
 ==============================================================
+hanR -- 2019-04-03 12:29
+--------------------------------------------------------------
+Cleaned code into sections and displayed pie chart. Error still exists with displying too many pie charts and reading in data.
+==============================================================
 linK -- 2019-04-04 13:17
 --------------------------------------------------------------
 - Work on donut conversion
