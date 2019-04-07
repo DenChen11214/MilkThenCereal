@@ -74,3 +74,11 @@ linK -- 2019-04-07 16:41
 - Shifting pie graph
 - Game list progress
 ==============================================================
+==============================================================
+dennisC -- 2019-04-07 18:50
+--------------------------------------------------------------
+- Made it so that for publishers and developers, we only show the top 10
+- For year of release, we only show the past 15 years
+- For meta-critic scores, they're grouped up in 10s
+- For all categories except scores and years, the bars are sorted by sales descending from left to right
+- The labels on the x-axis are rotated 45 degrees to avoid overlapping
