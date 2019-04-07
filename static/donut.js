@@ -9,23 +9,24 @@ d3.csv(filename, function(error, givenData) {
   var gamesInSection = {};
   var total = 0;
   for (let i of givenData){
+    var sample = i.Platform;
     total += 1;
-    if (!(i.Platform in categories)){
-      categories[i.Platform] = 1;
+    if (!(sample in categories)){
+      categories[sample] = 1;
     }
     else{
-      categories[i.Platform] = categories[i.Platform] + 1;
+      categories[sample] = categories[sample] + 1;
     }
-    if (!(i.Platform in gamesInSection)){
+    if (!(sample in gamesInSection)){
       var arr = new Array();
       arr.push(i);
-      gamesInSection[i.Platform] = arr;
+      gamesInSection[sample] = arr;
     }
     else{
-      (gamesInSection[i.Platform]).push(i);
+      (gamesInSection[sample]).push(i);
     }
   }
-  //console.log(gamesInSection);
+  console.log(gamesInSection);
   for (var j in categories){
     data.push({
       "cat": j,
@@ -230,7 +231,16 @@ function DonutCharts() {
                 if (0 === thisDonut.selectAll('.clicked')[0].length) {
                     thisDonut.select('circle').on('click')();
                 }
-
+                /////// TESTING////////////////////////
+                var svgContainer = d3.select("body").append("svg")
+                                      .attr("width",500)
+                                      .attr("height",500);
+                var text = svgContainer.selectAll("text")
+                                      .attr("font-size", "20px")
+                                      .append("text");
+                var textLabels = text
+                                .text( function (d) { return "test"})
+                ///////////////////////////////////////////////////////////////////////
                 var thisPath = d3.select(this);
                 var clicked = thisPath.classed('clicked');
                 pathAnim(thisPath, ~~(!clicked));
@@ -295,6 +305,7 @@ function DonutCharts() {
             .attr('class', 'legend')
             .attr('width', '100%')
             .attr('height', 50);
+
 
         var donut = charts.selectAll('.donut')
                         .data(dataset)
