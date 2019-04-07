@@ -35,12 +35,12 @@ d3.csv(filename, function(error, givenData) {
     })
   }
   var type = ["Platforms"];
-  var unit = [' games'];
+  var unit = [' Games'];
   dataset.push({
     "type": type[0],
     "unit": unit[0],
     "data": data,
-    "total": total
+    "total": Math.round(total)
   });
   console.log(dataset);
   var donuts = new DonutCharts();
@@ -85,8 +85,22 @@ function DonutCharts() {
     var chart_m,
         chart_r,
         color = function(i){
-            var randomColor = "#" + Math.floor(Math.random()*16777215).toString(16);
-            return randomColor;
+            console.log(i);
+            // var outColor = "#" + Math.floor(Math.random()*16777215).toString(16);
+            var start = [33, 165, 227];
+            var end = [241, 249, 253];
+            var maxDst = [];
+            var delta = [];
+            var finColor = [];
+            var perc = i / 15.;
+            for (var j = 0; j < 3; j++) {
+              maxDst.push(end[j] - start[j]);
+              delta.push(maxDst[j] * perc);
+              finColor.push(Math.round(start[j] + delta[j]));
+            }
+            var outColor = 'rgb(' + finColor[0] + ',' + finColor[1] + ',' + finColor[2] + ')';
+            console.log(outColor);
+            return outColor;
         };
     var getCatNames = function(dataset) {
         var catNames = new Array();
@@ -160,8 +174,8 @@ function DonutCharts() {
             });
         thisDonut.select('.value')
             .text(function(d) {
-                return (sum)? sum.toFixed(1) + d.unit
-                            : d.total.toFixed(1) + d.unit;
+                return (sum)? Math.round(sum.toFixed(1)) + d.unit
+                            : Math.round(d.total.toFixed(1)) + d.unit;
             });
         thisDonut.select('.percentage')
             .text(function(d) {
@@ -174,7 +188,7 @@ function DonutCharts() {
             .text('');
         charts.selectAll('.value')
             .text(function(d) {
-                return d.total.toFixed(1) + d.unit;
+                return Math.round(d.total.toFixed(1)) + d.unit;
             });
         charts.selectAll('.percentage')
             .text('');
@@ -211,7 +225,7 @@ function DonutCharts() {
                     return d.data.cat;
                 });
                 thisDonut.select('.value').text(function(donut_d) {
-                    return d.data.val.toFixed(1) + donut_d.unit;
+                    return Math.round(d.data.val.toFixed(1)) + donut_d.unit;
                 });
                 thisDonut.select('.percentage').text(function(donut_d) {
                     return (d.data.val/donut_d.total*100).toFixed(2) + '%';
