@@ -63,7 +63,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
         if (indVar == "Platform"){
           return d.Platform;
         }
-        if (indVar == "Critic"){
+        if (indVar == "Critic Score"){
           return d.Critic_Score;
         }
       })
@@ -72,7 +72,41 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
                 "EU_Sales": d3.sum(leaves, function(d) {return parseFloat(d.EU_Sales);}),
                 "JP_Sales": d3.sum(leaves, function(d) {return parseFloat(d.JP_Sales);}),
                 "Other_Sales": d3.sum(leaves, function(d) {return parseFloat(d.Other_Sales);})}})
-      .entries(data);
+      .entries(data)
+      .sort(function(a,b){
+        if(indVar != "Year" && indVar != "Critic Score"){
+            return d3.descending((a.values.NA_Sales + a.values.EU_Sales + a.values.JP_Sales + a.values.Other_Sales),
+            (b.values.NA_Sales + b.values.EU_Sales + b.values.JP_Sales + b.values.Other_Sales))
+        }
+      });
+      if(indVar == "Developer" || indVar == "Publisher"){
+        nested_data = nested_data.slice(0,10)
+      }
+      if(indVar == "Year"){
+        nested_data = nested_data.slice(6,21)
+      }
+      criticScores = [{ "key": "20-29", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
+                      { "key": "30-39", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
+                      { "key": "40-49", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
+                      { "key": "50-59", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
+                      { "key": "60-69", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
+                      { "key": "70-79", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
+                      { "key": "80-89", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
+                      { "key": "90-29", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}}]
+      if(indVar == "Critic Score"){
+        for(score in nested_data){
+          for(var i = 2; i < 10 ;i++){
+            if(parseInt(nested_data[score].key) >= i * 10 && parseInt(nested_data[score].key) < (i + 1 ) * 10){
+              criticScores[i - 2].values.NA_Sales += nested_data[score].values.NA_Sales;
+              criticScores[i - 2].values.EU_Sales += nested_data[score].values.EU_Sales;
+              criticScores[i - 2].values.JP_Sales += nested_data[score].values.JP_Sales;
+              criticScores[i - 2].values.Other_Sales += nested_data[score].values.Other_Sales;
+            }
+          }
+        }
+        nested_data = criticScores
+      }
+
       updateSlice(nested_data)
   })
 
@@ -83,7 +117,11 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
               "EU_Sales": d3.sum(leaves, function(d) {return parseFloat(d.EU_Sales);}),
               "JP_Sales": d3.sum(leaves, function(d) {return parseFloat(d.JP_Sales);}),
               "Other_Sales": d3.sum(leaves, function(d) {return parseFloat(d.Other_Sales);})}})
-    .entries(data);
+    .entries(data)
+    .sort(function(a,b){
+      return d3.descending((a.values.NA_Sales + a.values.EU_Sales + a.values.JP_Sales + a.values.Other_Sales),
+      (b.values.NA_Sales + b.values.EU_Sales + b.values.JP_Sales + b.values.Other_Sales))
+    });
   var region = nested_data.map(function(d,i){
     area = []
     for(value in d.values){
@@ -128,7 +166,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
       .attr("class", "x axis")
       .attr("id","xTick")
       .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
+      .call(xAxis)
   var yAxisUpdate = svg.append("g")
       .attr("class", "y axis")
       .attr("id","yTick")
@@ -140,7 +178,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
       .attr("class", "legend")
       .attr("transform", function(d,i) { return "translate(0," + i * 20 + ")"; })
       .style("opacity","0");
-  console.log(sales);
+
   legend.append("rect")
       .attr("x", width - 18)
       .attr("width", 18)
@@ -155,6 +193,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
       .text(function(d) {return d; });
   legend.transition().delay(function(d,i){ return 1300 + 100 * i; }).style("opacity","1");
 
+  var slice
   var updateSlice = function(data) {
     var xVar = data.map(function(d){ return d.key});
     x.domain(xVar);
@@ -175,7 +214,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
       svg.select("#xAxis")
           .attr("class", "x label")
           .attr("x", width / 2)
-          .attr("y", height + 40)
+          .attr("y", height + 70)
           .attr("font-size","16px")
           .style("text-anchor", "middle")
           .text(indVar);
@@ -191,7 +230,12 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
           .attr("class", "x axis")
           .attr("transform", "translate(0," + height + ")")
           .transition().duration(1500).ease("sin-in-out")
-          .call(xAxis);
+          .call(xAxis)
+      xAxisUpdate.selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-45)" );
       yAxisUpdate = svg.select("#yTick")
           .attr("class", "y axis")
           .attr("transform", "translate(30,0)")
@@ -208,7 +252,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
       sales.push(dict)
     }
     d3.selectAll(".slice").remove();
-    var slice = svg.selectAll(".slice").data(data)
+    slice = svg.selectAll(".slice").data(data)
     slice
       .enter().append("g")
       .attr("class", "slice")
@@ -244,7 +288,6 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
         sales = d[value]
       }
       return height - y(sales)});
-    slice.exit().remove();
   };
   updateSlice(nested_data)
 });
