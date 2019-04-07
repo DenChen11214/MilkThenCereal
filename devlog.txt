@@ -63,3 +63,7 @@ hanR -- 2019-04-06 23:57
 --------------------------------------------------------------
 Fixed bugs so now the pie chart accurately parses our data based on platforms and is dynamic. 
 ==============================================================
+hanR -- 2019-04-07 01:01
+--------------------------------------------------------------
+Pie-Chart displays what section you are hovering over, getting rid of the legend. Also added more information to stored dataset but having trouble displaying that data onto the page. 
+==============================================================
