@@ -180,7 +180,7 @@ function DonutCharts() {
                     return (d.data.val/donut_d.total*100).toFixed(2) + '%';
                 });
             },
-            
+
             'mouseout': function(d, i, j) {
                 var thisPath = d3.select(this);
                 if (!thisPath.classed('clicked')) {
@@ -312,5 +312,6 @@ function genData() {
             "total": total
         });
     }
+    console.log(dataset);
     return dataset;
 }

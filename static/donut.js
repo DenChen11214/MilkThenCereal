@@ -1,15 +1,46 @@
 var filename = 'data/VideoGameSales.csv';
 var salesData;
 
-d3.csv(filename, function(error, data) {
-  salesData = data;
+d3.csv(filename, function(error, givenData) {
+  //salesData = data;
+  var dataset = new Array();
+  var data = new Array();
+  var categories = {};
+  var total = 0;
+  for (let i of givenData){
+    total += 1;
+    if (!(i.Platform in categories)){
+      categories[i.Platform] = 1;
+    }
+    else{
+      categories[i.Platform] = categories[i.Platform] + 1;
+    }
+  }
+  for (var j in categories){
+    data.push({
+      "cat": j,
+      "val": categories[j]
+    })
+  }
+  var type = ["Platforms"];
+  var unit = [''];
+  dataset.push({
+    "type": type[0],
+    "unit": unit[0],
+    "data": data,
+    "total": total
+  });
+  console.log(dataset);
+  var donuts = new DonutCharts();
+  donuts.create(dataset);
   //Data reorganization
-  var platDct = {
+  /*var platDct = {
     'type' : 'Votes',
     'unit' : 'Games',
     'data' : {},
     'total' : 0
   };
+
   for (let i of data) {
     if (!(i.Platform in platDct['data'])) {
       platDct['data'][i.Platform] = {
@@ -29,9 +60,12 @@ d3.csv(filename, function(error, data) {
   }
   platDct['data'] = datLst;
   platDct = [platDct];
+  console.log("READING DATA");
   console.log(platDct);
+
   var donuts = new DonutCharts();
   donuts.create(platDct);
+  */
 });
 //////////////////////////////////////////////////////////////////////
 function DonutCharts() {
@@ -112,10 +146,14 @@ function DonutCharts() {
                 .attr('text-anchor', 'middle')
                 .style('font-weight', 'bold')
                 .text(function(d, i) {
-                    return d.Platform;
+                    return d.type;
                 });
         donuts.append('text')
-                .attr('class', 'center-txt value')
+              .attr('class', 'center-txt value')
+              .attr('y', chart_r * 0.08)
+              .attr('text-anchor', 'middle');
+        donuts.append('text')
+                .attr('class', 'center-txt name')
                 .attr('text-anchor', 'middle');
         donuts.append('text')
                 .attr('class', 'center-txt percentage')
@@ -129,6 +167,10 @@ function DonutCharts() {
         var sum = d3.sum(thisDonut.selectAll('.clicked').data(), function(d) {
             return d.data.val;
         });
+        thisDonut.select('.name')
+            .text(function(d){
+                return '';
+            });
         thisDonut.select('.value')
             .text(function(d) {
                 return (sum)? sum.toFixed(1) + d.unit
@@ -141,10 +183,11 @@ function DonutCharts() {
             });
     }
     var resetAllCenterText = function() {
+        charts.selectAll('.name')
+            .text('');
         charts.selectAll('.value')
             .text(function(d) {
-                return '';
-                //d.total.toFixed(1) + d.unit;
+                return d.total.toFixed(1) + d.unit;
             });
         charts.selectAll('.percentage')
             .text('');
@@ -174,8 +217,12 @@ function DonutCharts() {
     var updateDonut = function() {
         var eventObj = {
             'mouseover': function(d, i, j) {
+                //console.log(d.data.cat);
                 pathAnim(d3.select(this), 1);
                 var thisDonut = charts.select('.type' + j);
+                thisDonut.select('.name').text(function(donut_d) {
+                    return d.data.cat;
+                });
                 thisDonut.select('.value').text(function(donut_d) {
                     return d.data.val.toFixed(1) + donut_d.unit;
                 });
@@ -222,12 +269,14 @@ function DonutCharts() {
         var paths = charts.selectAll('.donut')
                         .selectAll('path')
                         .data(function(d, i) {
+                          /*
                             var currDat = [{
                               'cat' : d.Platform,
                               'val' : d.Name
                             }]
+                            */
                             //console.log(currDat);
-                            return pie(currDat);
+                            return pie(d.data);
                         });
 
         paths
@@ -253,8 +302,8 @@ function DonutCharts() {
     this.create = function(dataset) {
         console.log("making it rn");
         var $charts = $('#donut-charts');
-        chart_m = $charts.innerWidth() / dataset.length / 2 * 100;
-        chart_r = $charts.innerWidth() / dataset.length / 2 * 100;
+        chart_m = $charts.innerWidth() / dataset.length / 2 * 0.07;
+        chart_r = $charts.innerWidth() / dataset.length / 2 * 0.425;
 
         charts.append('svg')
             .attr('class', 'legend')
