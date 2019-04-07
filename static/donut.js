@@ -6,6 +6,7 @@ d3.csv(filename, function(error, givenData) {
   var dataset = new Array();
   var data = new Array();
   var categories = {};
+  var gamesInSection = {};
   var total = 0;
   for (let i of givenData){
     total += 1;
@@ -15,15 +16,25 @@ d3.csv(filename, function(error, givenData) {
     else{
       categories[i.Platform] = categories[i.Platform] + 1;
     }
+    if (!(i.Platform in gamesInSection)){
+      var arr = new Array();
+      arr.push(i);
+      gamesInSection[i.Platform] = arr;
+    }
+    else{
+      (gamesInSection[i.Platform]).push(i);
+    }
   }
+  //console.log(gamesInSection);
   for (var j in categories){
     data.push({
       "cat": j,
-      "val": categories[j]
+      "val": categories[j],
+      "games": gamesInSection[j]
     })
   }
   var type = ["Platforms"];
-  var unit = [''];
+  var unit = [' games'];
   dataset.push({
     "type": type[0],
     "unit": unit[0],
@@ -84,31 +95,6 @@ function DonutCharts() {
         }
 
         return catNames;
-    }
-//////////////////////////////////////////////////////////////
-// LEGEND ON TOP
-    var createLegend = function(catNames) {
-        var legends = charts.select('.legend')
-                        .selectAll('g')
-                            .data(catNames)
-                        .enter().append('g')
-                            .attr('transform', function(d, i) {
-                                return 'translate(' + (i * 150 + 50) + ', 10)';
-                            });
-
-        legends.append('circle')
-            .attr('class', 'legend-icon')
-            .attr('r', 6)
-            .style('fill', function(d, i) {
-                return color(i);
-            });
-
-        legends.append('text')
-            .attr('dx', '1em')
-            .attr('dy', '.3em')
-            .text(function(d) {
-                return d;
-            });
     }
 //////////////////////////////////////////////////////////////
 // INTERACTIVE WITH PIE CHART CENTER AND TRANSITIONS
@@ -321,7 +307,6 @@ function DonutCharts() {
                         })
                         .attr('transform', 'translate(' + (chart_r+chart_m) + ',' + (chart_r+chart_m) + ')');
 
-        createLegend(getCatNames(dataset));
         // ^ is done but bottom steps aren't run
         createCenter();
         updateDonut();
