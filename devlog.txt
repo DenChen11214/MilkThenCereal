@@ -67,8 +67,10 @@ hanR -- 2019-04-07 01:01
 --------------------------------------------------------------
 Pie-Chart displays what section you are hovering over, getting rid of the legend. Also added more information to stored dataset but having trouble displaying that data onto the page.
 ==============================================================
-linK -- 2019-04-07 13:33
+linK -- 2019-04-07 16:41
 --------------------------------------------------------------
 - Circle gradient
 - Intification
+- Shifting pie graph
+- Game list progress
 ==============================================================

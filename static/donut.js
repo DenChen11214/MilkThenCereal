@@ -85,7 +85,7 @@ function DonutCharts() {
     var chart_m,
         chart_r,
         color = function(i){
-            console.log(i);
+            // console.log(i);
             // var outColor = "#" + Math.floor(Math.random()*16777215).toString(16);
             var start = [33, 165, 227];
             var end = [241, 249, 253];
@@ -99,7 +99,7 @@ function DonutCharts() {
               finColor.push(Math.round(start[j] + delta[j]));
             }
             var outColor = 'rgb(' + finColor[0] + ',' + finColor[1] + ',' + finColor[2] + ')';
-            console.log(outColor);
+            // console.log(outColor);
             return outColor;
         };
     var getCatNames = function(dataset) {
@@ -132,6 +132,11 @@ function DonutCharts() {
                 pathAnim(paths, 0);
                 paths.classed('clicked', false);
                 resetAllCenterText();
+                d3.select('.donut') //Move donut back to center
+                    .transition()
+                    .duration(1000)
+                    .ease('quad')
+                    .attr('transform', 'translate(' + (chart_r+chart_m) * 2 + ',' + (chart_r+chart_m) + ')');
             }
         }
         var donuts = d3.selectAll('.donut');
@@ -261,6 +266,47 @@ function DonutCharts() {
                 thisPath.classed('clicked', !clicked);
 
                 setCenterText(thisDonut);
+                var currDat = thisDonut.selectAll('.clicked').data();
+                var currGames = [];
+                for (let platform of currDat) { //Create list of selected games
+                  for (let game of platform.data.games) {
+                    currGames.push(game);
+                  }
+                }
+                var numClicked = thisDonut.selectAll('.clicked')[0].length;
+                var games = charts.select('.mainChart').selectAll('.g')
+                                .data(currGames);
+                console.log(currGames);
+                if (numClicked == 0) { //Activated upon deselection of everything
+                  d3.select('.donut') //Move donut back to center
+                      .transition()
+                      .duration(1000)
+                      .ease('quad')
+                      .attr('transform', 'translate(' + (chart_r+chart_m) * 2 + ',' + (chart_r+chart_m) + ')');
+                } else if (numClicked == 1) { //Activated once
+                  //console.log(numClicked);
+                  d3.select('.donut') //Move donut to the left
+                      .transition()
+                      .duration(1000)
+                      .ease('quad')
+                      .attr('transform', 'translate(' + (chart_r+chart_m) + ',' + (chart_r+chart_m) + ')');
+
+                  games.enter().append('g')
+                      .attr('class', 'game')
+                      .attr('transform', function(d,i) { return "translate(0," + i * 20 + ")"; })
+                      .style('opacity', '0');
+
+                  games.append('text')
+                      .attr('x', (chart_r+chart_m) * 2)
+                      .attr('y', 9)
+                      .attr('dy', ".35em")
+                      .style('text-anchor', 'start')
+                      .text(function(d,i) {return d.Name;});
+
+                  games.transition()
+                      .delay(function(d,i){ return 1000 + 10 * i; })
+                      .style("opacity","1");
+                }
             }
         };
         var pie = d3.layout.pie()
@@ -320,17 +366,17 @@ function DonutCharts() {
             .attr('width', '100%')
             .attr('height', 50);
 
-
         var donut = charts.selectAll('.donut')
                         .data(dataset)
                     .enter().append('svg:svg')
-                        .attr('width', (chart_r + chart_m) * 2)
+                        .attr('class', 'mainChart')
+                        .attr('width', (chart_r + chart_m) * 4)
                         .attr('height', (chart_r + chart_m) * 2)
                     .append('svg:g')
                         .attr('class', function(d, i) {
                             return 'donut type' + i;
                         })
-                        .attr('transform', 'translate(' + (chart_r+chart_m) + ',' + (chart_r+chart_m) + ')');
+                        .attr('transform', 'translate(' + (chart_r + chart_m) * 2 + ',' + (chart_r+chart_m) + ')');
 
         // ^ is done but bottom steps aren't run
         createCenter();

@@ -140,7 +140,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
       .attr("class", "legend")
       .attr("transform", function(d,i) { return "translate(0," + i * 20 + ")"; })
       .style("opacity","0");
-
+  console.log(sales);
   legend.append("rect")
       .attr("x", width - 18)
       .attr("width", 18)
