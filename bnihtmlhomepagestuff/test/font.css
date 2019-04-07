@@ -1,0 +1,9 @@
+@font-face {
+	font-family: arcade;
+	src: url(ARCADECLASSIC.woff);
+}
+
+* {
+	font-family: arcade;
+	color: #00FF00;
+}
