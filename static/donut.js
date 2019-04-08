@@ -483,7 +483,7 @@ function DonutCharts() {
                 .style('fill', function(d, i) {
                     return color(i);
                 })
-                .style('stroke', '#FFFFFF')
+                .style('stroke', 'rgb(0,0,0)')
                 .on(eventObj)
 
         paths.exit().remove();
