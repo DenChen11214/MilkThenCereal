@@ -35,5 +35,6 @@ pc.addEventListener("click", function(){
 
 var bc = document.getElementById("barchoice");
 bc.addEventListener("click", function(){
-	update(s2,b)
+	console.log(1);
+	update(s2,p)
 	showBar()});
