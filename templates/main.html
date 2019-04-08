@@ -128,16 +128,29 @@
       <center><h1>Customizable Bar Graph</h1>
         <div style="padding-left: 75px; float: left">
           <h3>Sort by</h3>
-          <select id="indVarBar">
-            <option value="Genre">Genre</option>
-            <option value="Publisher">Publisher</option>
-            <option value="Year_of_Release">Year of Release</option>
-            <option value="Developer">Developer</option>
-            <option value="Rating">ESRB Rating</option>
-            <option value="Platform">Platform</option>
-            <option value="Critic_Score">Metacritic Score</option>
-          </select>
-          <button id = "changeBar"> Submit </button>
+          <div class="btn-group-vertical btn-group-toggle" data-toggle="buttons" id='barBtns'>
+            <label class='btn btn-secondary active' style='color: #00FF00'>
+              <input type="radio" name="graphtype" value="Genre" checked="checked"> Genre
+            </label>
+            <label class='btn btn-secondary' style='color: #00FF00'>
+              <input type="radio" name="graphtype" value="Publisher"> Publisher
+            </label>
+            <label class='btn btn-secondary' style='color: #00FF00'>
+              <input type="radio" name="graphtype" value="Year_of_Release"> Year of Release
+            </label>
+            <label class='btn btn-secondary' style='color: #00FF00'>
+              <input type="radio" name="graphtype" value="Developer"> Developer
+            </label>
+            <label class='btn btn-secondary' style='color: #00FF00'>
+              <input type="radio" name="graphtype" value="Rating"> ESRB Rating
+            </label>
+            <label class='btn btn-secondary' style='color: #00FF00'>
+              <input type="radio" name="graphtype" value="Platform"> Platform
+            </label>
+            <label class='btn btn-secondary' style='color: #00FF00'>
+              <input type="radio" name="graphtype" value="Critic_Score"> Metacritic Score
+            </label>
+          </div>
         </div>
         <div id="bar-graph"></div></center>
     </div>

@@ -42,11 +42,15 @@ var charts= d3.select('#bar-graph').append("svg")
 charts.call(tip);
 
 d3.csv("/data/VideoGameSales.csv", function(error, data) {
-  var changeBut = document.getElementById("changeBar")
-  var indVarBar = "Genre"
-  changeBut.addEventListener("click",function(e){
-    indVarBar = document.getElementById("indVarBar").value
-    nested_data = d3.nest()
+  //var changeBut = document.getElementById("changeBar");
+  var indVarBar = "Genre";
+  var barChildren = document.getElementById('barBtns').children;
+  console.log(barChildren);
+  for (let j of barChildren) {
+    j.addEventListener( "click", function(e){
+      indVarBar = j.children[0].value;
+      console.log(indVarBar);
+      nested_data = d3.nest()
       .key(function(d) {
         if (indVarBar == "Genre"){
           return d.Genre;
@@ -71,46 +75,47 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
       })
       .rollup(function(leaves) {
         return {"NA_Sales": d3.sum(leaves, function(d) {return parseFloat(d.NA_Sales);}),
-                "EU_Sales": d3.sum(leaves, function(d) {return parseFloat(d.EU_Sales);}),
-                "JP_Sales": d3.sum(leaves, function(d) {return parseFloat(d.JP_Sales);}),
-                "Other_Sales": d3.sum(leaves, function(d) {return parseFloat(d.Other_Sales);})}})
-      .entries(data)
-      .sort(function(a,b){
-        if(indVarBar != "Year_of_Release" && indVarBar != "Critic_Score"){
+        "EU_Sales": d3.sum(leaves, function(d) {return parseFloat(d.EU_Sales);}),
+        "JP_Sales": d3.sum(leaves, function(d) {return parseFloat(d.JP_Sales);}),
+        "Other_Sales": d3.sum(leaves, function(d) {return parseFloat(d.Other_Sales);})}})
+        .entries(data)
+        .sort(function(a,b){
+          if(indVarBar != "Year_of_Release" && indVarBar != "Critic_Score"){
             return d3.descending((a.values.NA_Sales + a.values.EU_Sales + a.values.JP_Sales + a.values.Other_Sales),
             (b.values.NA_Sales + b.values.EU_Sales + b.values.JP_Sales + b.values.Other_Sales))
+          }
+        });
+        if(indVarBar == "Developer" || indVarBar == "Publisher"){
+          nested_data = nested_data.slice(0,15)
         }
-      });
-      if(indVarBar == "Developer" || indVarBar == "Publisher"){
-        nested_data = nested_data.slice(0,15)
-      }
-      if(indVarBar == "Year_of_Release"){
-        nested_data = nested_data.slice(6,21)
-      }
-      criticScores = [{ "key": "20-29", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
-                      { "key": "30-39", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
-                      { "key": "40-49", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
-                      { "key": "50-59", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
-                      { "key": "60-69", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
-                      { "key": "70-79", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
-                      { "key": "80-89", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
-                      { "key": "90-29", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}}]
-      if(indVarBar == "Critic_Score"){
-        for(score in nested_data){
-          for(var i = 2; i < 10 ;i++){
-            if(parseInt(nested_data[score].key) >= i * 10 && parseInt(nested_data[score].key) < (i + 1 ) * 10){
-              criticScores[i - 2].values.NA_Sales += nested_data[score].values.NA_Sales;
-              criticScores[i - 2].values.EU_Sales += nested_data[score].values.EU_Sales;
-              criticScores[i - 2].values.JP_Sales += nested_data[score].values.JP_Sales;
-              criticScores[i - 2].values.Other_Sales += nested_data[score].values.Other_Sales;
+        if(indVarBar == "Year_of_Release"){
+          nested_data = nested_data.slice(6,21)
+        }
+        criticScores = [{ "key": "20-29", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
+                        { "key": "30-39", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
+                        { "key": "40-49", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
+                        { "key": "50-59", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
+                        { "key": "60-69", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
+                        { "key": "70-79", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
+                        { "key": "80-89", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
+                        { "key": "90-29", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}}]
+        if(indVarBar == "Critic_Score"){
+          for(score in nested_data){
+            for(var i = 2; i < 10 ;i++){
+              if(parseInt(nested_data[score].key) >= i * 10 && parseInt(nested_data[score].key) < (i + 1 ) * 10){
+                criticScores[i - 2].values.NA_Sales += nested_data[score].values.NA_Sales;
+                criticScores[i - 2].values.EU_Sales += nested_data[score].values.EU_Sales;
+                criticScores[i - 2].values.JP_Sales += nested_data[score].values.JP_Sales;
+                criticScores[i - 2].values.Other_Sales += nested_data[score].values.Other_Sales;
+              }
             }
           }
+          nested_data = criticScores
         }
-        nested_data = criticScores
-      }
 
-      updateSlice(nested_data)
-  })
+        updateSlice(nested_data)
+      });
+    }
 
   var nested_data = d3.nest()
     .key(function(d) { return d.Genre; })
