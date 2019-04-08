@@ -88,5 +88,8 @@ Fixed selection bugs when choosing sections of the pie chart and fixed formattin
 ==============================================================
 hanR -- 2019-04-08 02:30
 --------------------------------------------------------------
-Combined all parts onto one webpage and made the transitioning between the bar graph and pie chart smooth. Still can't figure out how to update the pie chart. 
+Combined all parts onto one webpage and made the transitioning between the bar graph and pie chart smooth. Still can't figure out how to update the pie chart.
 ==============================================================
+dennisC -- 2019-04-08 18:00
+--------------------------------------------------------------
+- Made user be able to choose category of pie chart
