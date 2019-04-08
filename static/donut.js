@@ -1,20 +1,20 @@
 var filename = 'data/VideoGameSales.csv';
 var salesData;
 var prevClicked = -1;
-var indVar = "Platform"
+var indVarPie = "Platform"
 
 d3.csv(filename, function(error, givenData) {
-  var changeBut = document.getElementById("change")
+  var changeBut = document.getElementById("changePie")
   changeBut.addEventListener("click",function(e){
     d3.select("#donut-charts").html("");
-    indVar = document.getElementById("indVar").value
+    indVarPie = document.getElementById("indVarPie").value
     var dataset = new Array();
     var data = new Array();
     var categories = {};
     var gamesInSection = {};
     var total = 0;
     for (let i of givenData){
-      var sample = i[indVar];
+      var sample = i[indVarPie];
       total += 1;
       if (!(sample in categories)){
         categories[sample] = 1;
@@ -38,7 +38,7 @@ d3.csv(filename, function(error, givenData) {
         "games": gamesInSection[j]
       })
     }
-    var type = [indVar];
+    var type = [indVarPie];
     var unit = [' Games'];
     dataset.push({
       "type": type[0],
@@ -47,10 +47,10 @@ d3.csv(filename, function(error, givenData) {
       "total": Math.round(total)
     });
     console.log(dataset)
-    if(indVar == "Publisher" || indVar == "Developer"){
+    if(indVarPie == "Publisher" || indVarPie == "Developer"){
       dataset[0]["data"] = dataset[0]["data"].splice(0,15)
     }
-    if(indVar == "Critic_Score"){
+    if(indVarPie == "Critic_Score"){
       console.log(dataset[0]["data"].length)
       dataset[0]["data"].pop()
       dataset[0]["data"] = dataset[0]["data"].splice(-20)
@@ -66,7 +66,7 @@ d3.csv(filename, function(error, givenData) {
   var gamesInSection = {};
   var total = 0;
   for (let i of givenData){
-    var sample = i[indVar];
+    var sample = i[indVarPie];
     total += 1;
     if (!(sample in categories)){
       categories[sample] = 1;
@@ -90,7 +90,7 @@ d3.csv(filename, function(error, givenData) {
       "games": gamesInSection[j]
     })
   }
-  var type = [indVar];
+  var type = [indVarPie];
   var unit = [' Games'];
   dataset.push({
     "type": type[0],
@@ -109,16 +109,16 @@ d3.csv(filename, function(error, givenData) {
   };
 
   for (let i of data) {
-    if (!(i[indVar] in platDct['data'])) {
-      platDct['data'][i[indVar]] = {
+    if (!(i[indVarPie] in platDct['data'])) {
+      platDct['data'][i[indVarPie]] = {
         'games' : [],
-        'cat' : i[indVar],
+        'cat' : i[indVarPie],
         'val' : 0
       };
     }
-    //console.log(platDct[data[indVar]]['games']);
-    platDct['data'][i[indVar]]['games'].push(i);
-    platDct['data'][i[indVar]]['val'] += parseFloat(i.Global_Sales);
+    //console.log(platDct[data[indVarPie]]['games']);
+    platDct['data'][i[indVarPie]]['games'].push(i);
+    platDct['data'][i[indVarPie]]['val'] += parseFloat(i.Global_Sales);
   }
   var datLst = [];
   for (let i of Object.keys(platDct.data)) {
@@ -403,7 +403,7 @@ function DonutCharts() {
                           .style('text-anchor', 'start')
                           .style('font-weight', 'bold')
                           .style('fill', '#00FF00')
-                          .text(currGames[0][indVar] + " games");
+                          .text(currGames[0][indVarPie] + " games");
 
                       games.enter().append('g')
                           .attr('class', 'game')
@@ -442,7 +442,7 @@ function DonutCharts() {
                           .style('text-anchor', 'start')
                           .style('font-weight', 'bold')
                           .style('fill', '#00FF00')
-                          .text(currGames[0][indVar] + " games");
+                          .text(currGames[0][indVarPie] + " games");
                       charts.selectAll('.gamesHeader').transition()
                           .delay(1000)
                           .style('fill', '#00FF00')
@@ -482,7 +482,7 @@ function DonutCharts() {
                         .style('text-anchor', 'start')
                         .style('font-weight', 'bold')
                         .style('fill', '#00FF00')
-                        .text(currGames[currGames.length-1][indVar] + " games");
+                        .text(currGames[currGames.length-1][indVarPie] + " games");
 
                     charts.selectAll('.gamesHeader').transition()
                         .delay(0)
@@ -529,7 +529,7 @@ function DonutCharts() {
                         .data(function(d, i) {
                           /*
                             var currDat = [{
-                              'cat' : d[indVar],
+                              'cat' : d[indVarPie],
                               'val' : d.Name
                             }]
                             */
