@@ -319,6 +319,9 @@ function DonutCharts() {
                                   .data(currGames);
                   //console.log(currGames);
                   if (numClicked == 0) { //Activated upon deselection of everything
+                    charts.selectAll('.gamesHeader').transition()
+                        .duration(500)
+                        .style("opacity","0");
                     d3.selectAll('.game')
                         .transition()
                         .duration(500)
@@ -330,12 +333,26 @@ function DonutCharts() {
                         .attr('transform', 'translate(' + (chart_r+chart_m) * 2 + ',' + (chart_r+chart_m) + ')');
                   } else if (numClicked == 1) { //Activated once
                     if (prevClicked == 2){
+                      d3.selectAll('.gamesHeader')
+                          .transition()
+                          .style("opacity","0");
                       d3.selectAll('.game')
                           .transition()
                           .style("opacity","0");
+                      charts.select('.mainChart').append('g')
+                          .attr('class', 'gamesHeader')
+                          .style('opacity', '0')
+                      .append('text')
+                          .attr('x', (chart_r + chart_m) * 2)
+                          .attr('y', 9)
+                          .attr('dy', '.35em')
+                          .style('text-anchor', 'start')
+                          .style('font-weight', 'bold')
+                          .text(currGames[0].Platform);
+
                       games.enter().append('g')
                           .attr('class', 'game')
-                          .attr('transform', function(d,i) { return "translate(0," + i * 20 + ")"; })
+                          .attr('transform', function(d,i) { return "translate(0," + (20 + i * 20) + ")"; })
                           .style('opacity', '0');
 
                       games.append('text')
@@ -356,9 +373,24 @@ function DonutCharts() {
                           .ease('quad')
                           .attr('transform', 'translate(' + (chart_r+chart_m) + ',' + (chart_r+chart_m) + ')');
 
+                      charts.select('.mainChart').append('g')
+                          .attr('class', 'gamesHeader')
+                          .style('opacity', '0')
+                      .append('text')
+                          .attr('x', (chart_r + chart_m) * 2)
+                          .attr('y', 9)
+                          .attr('dy', '.35em')
+                          .style('text-anchor', 'start')
+                          .style('font-weight', 'bold')
+                          .text(currGames[0].Platform);
+
+                      charts.selectAll('.gamesHeader').transition()
+                          .delay(1000)
+                          .style("opacity","1");
+
                       games.enter().append('g')
                           .attr('class', 'game')
-                          .attr('transform', function(d,i) { return "translate(0," + i * 20 + ")"; })
+                          .attr('transform', function(d,i) { return "translate(0," + (20 + i * 20) + ")"; })
                           .style('opacity', '0');
 
                       games.append('text')
@@ -369,15 +401,31 @@ function DonutCharts() {
                           .text(function(d,i) {return d.Name;});
 
                       games.transition()
-                          .delay(function(d,i){ return 1000 + 10 * i; })
+                          .delay(function(d,i){ return 1010 + 10 * i; })
                           .style("opacity","1");
                     }
 
                   }
                   else if (numClicked == 2){
+
+                    charts.select('.mainChart').append('g')
+                        .attr('class', 'gamesHeader')
+                        .style('opacity', '0')
+                    .append('text')
+                        .attr('x', (chart_r + chart_m) * 3)
+                        .attr('y', 9)
+                        .attr('dy', '.35em')
+                        .style('text-anchor', 'start')
+                        .style('font-weight', 'bold')
+                        .text(currGames[currGames.length-1].Platform);
+
+                    charts.selectAll('.gamesHeader').transition()
+                        .delay(0)
+                        .style("opacity","1");
+
                     games.enter().append('g')
                         .attr('class', 'game')
-                        .attr('transform', function(d,i) { return "translate(0," + i * 20 + ")"; })
+                        .attr('transform', function(d,i) { return "translate(0," + (20 + i * 20) + ")"; })
                         .style('opacity', '0');
 
                     games.append('text')
