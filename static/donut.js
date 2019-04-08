@@ -1,5 +1,7 @@
 var filename = 'data/VideoGameSales.csv';
 var salesData;
+var prevClicked = -1;
+
 
 d3.csv(filename, function(error, givenData) {
   //salesData = data;
@@ -140,7 +142,13 @@ function DonutCharts() {
                 d3.selectAll('.game')
                     .transition()
                     .duration(500)
-                    .style("opacity","0");
+                    .style("opacity","0")
+                    .remove();
+                charts.selectAll('.gamesHeader').transition()
+                    .duration(500)
+                    .style("opacity","0")
+                    .remove()
+                prevClicked = -1;
             }
         }
         var donuts = d3.selectAll('.donut');
@@ -225,7 +233,6 @@ function DonutCharts() {
     // INTERACTIVE WITH INNER PIE CHART CIRCLE CODE
 /////////////////////////////////////////////////////////
     var updateDonut = function() {
-        var prevClicked = -1;
         var numClicked;
         var currDat = [];
         var prevGameData = new Set();
@@ -321,11 +328,13 @@ function DonutCharts() {
                   if (numClicked == 0) { //Activated upon deselection of everything
                     charts.selectAll('.gamesHeader').transition()
                         .duration(500)
-                        .style("opacity","0");
+                        .style("opacity","0")
+                        .remove()
                     d3.selectAll('.game')
                         .transition()
                         .duration(500)
-                        .style("opacity","0");
+                        .style("opacity","0")
+                        .remove();
                     d3.select('.donut') //Move donut back to center
                         .transition()
                         .duration(800)
@@ -335,20 +344,22 @@ function DonutCharts() {
                     if (prevClicked == 2){
                       d3.selectAll('.gamesHeader')
                           .transition()
-                          .style("opacity","0");
+                          .style("opacity","0")
+                          .remove();
                       d3.selectAll('.game')
                           .transition()
-                          .style("opacity","0");
+                          .style("opacity","0")
+                          .remove();
                       charts.select('.mainChart').append('g')
                           .attr('class', 'gamesHeader')
-                          .style('opacity', '0')
-                      .append('text')
+                          .style('opacity', '1')
+                          .append('text')
                           .attr('x', (chart_r + chart_m) * 2)
                           .attr('y', 9)
                           .attr('dy', '.35em')
                           .style('text-anchor', 'start')
                           .style('font-weight', 'bold')
-                          .text(currGames[0].Platform);
+                          .text(currGames[0].Platform + " games");
 
                       games.enter().append('g')
                           .attr('class', 'game')
@@ -365,6 +376,7 @@ function DonutCharts() {
                       games.transition()
                           .delay(function(d,i){ return 10 * i; })
                           .style("opacity","1");
+
                     }
                     else{
                       d3.select('.donut') //Move donut to the left
@@ -382,7 +394,7 @@ function DonutCharts() {
                           .attr('dy', '.35em')
                           .style('text-anchor', 'start')
                           .style('font-weight', 'bold')
-                          .text(currGames[0].Platform);
+                          .text(currGames[0].Platform + " games");
 
                       charts.selectAll('.gamesHeader').transition()
                           .delay(1000)
@@ -417,7 +429,7 @@ function DonutCharts() {
                         .attr('dy', '.35em')
                         .style('text-anchor', 'start')
                         .style('font-weight', 'bold')
-                        .text(currGames[currGames.length-1].Platform);
+                        .text(currGames[currGames.length-1].Platform + " games");
 
                     charts.selectAll('.gamesHeader').transition()
                         .delay(0)
