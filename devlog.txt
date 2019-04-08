@@ -74,7 +74,6 @@ linK -- 2019-04-07 16:41
 - Shifting pie graph
 - Game list progress
 ==============================================================
-==============================================================
 dennisC -- 2019-04-07 18:50
 --------------------------------------------------------------
 - Made it so that for publishers and developers, we only show the top 10
@@ -82,3 +81,12 @@ dennisC -- 2019-04-07 18:50
 - For meta-critic scores, they're grouped up in 10s
 - For all categories except scores and years, the bars are sorted by sales descending from left to right
 - The labels on the x-axis are rotated 45 degrees to avoid overlapping
+==============================================================
+hanR -- 2019-04-07 23:47
+--------------------------------------------------------------
+Fixed selection bugs when choosing sections of the pie chart and fixed formatting when displaying names of the games when a certain section of the pie chart is selected.
+==============================================================
+hanR -- 2019-04-08 02:30
+--------------------------------------------------------------
+Combined all parts onto one webpage and made the transitioning between the bar graph and pie chart smooth. Still can't figure out how to update the pie chart. 
+==============================================================
