@@ -16,9 +16,16 @@ async function update(s){
 		await sleep(ms);
 	}
 }
-
+function showPie(){
+  document.getElementById('pie').style.display ='block';
+  document.getElementById('bar').style.display ='none';
+}
+function showBar(){
+  document.getElementById('pie').style.display ='none';
+  document.getElementById('bar').style.display = 'block';
+}
 var pc = document.getElementById("piechoice");
-pc.addEventListener("click", function(){update(s1)});
+pc.addEventListener("click", function(){update(s1,showPie())});
 
 var bc = document.getElementById("barchoice");
-bc.addEventListener("click", function(){update(s2)});
+bc.addEventListener("click", function(){update(s2), showBar()});

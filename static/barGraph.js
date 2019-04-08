@@ -1,3 +1,5 @@
+var $charts = $('#bar-graph');
+
 var margin = {top: 40, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
@@ -31,13 +33,13 @@ var tip = d3.tip()
 var color = d3.scale.ordinal()
     .range(["#ca0020","#f4a582","#d5d5d5","#92c5de"]);
 
-var svg = d3.select("body").append("svg")
+var charts= d3.select('#bar-graph').append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom + 200)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-svg.call(tip);
+charts.call(tip);
 
 d3.csv("/data/VideoGameSales.csv", function(error, data) {
   var changeBut = document.getElementById("change")
@@ -137,7 +139,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
       sales.push(d.values[value])
     }
     return Math.max.apply(Math, sales)})]);
-  svg.append("text")
+  charts.append("text")
         .attr("x", (width / 2))
         .attr("id", "title")
         .attr("y", 0)
@@ -145,7 +147,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
         .style("font-size", "16px")
         .style("text-decoration", "underline")
         .text("Sales vs " + indVar );
-  svg.append("text")
+  charts.append("text")
       .attr("class", "x label")
       .attr("id","xAxis")
       .attr("x", width / 2)
@@ -153,7 +155,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
       .attr("font-size","16px")
       .style("text-anchor", "middle")
       .text(indVar);
-  svg.append("text")
+  charts.append("text")
       .attr("class", "y label")
       .attr("id", "yAxis")
       .attr("transform","rotate(-90)")
@@ -162,17 +164,17 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
       .attr("font-size","16px")
       .style("text-anchor", "middle")
       .text("Sales(Millions)");
-  var xAxisUpdate = svg.append("g")
+  var xAxisUpdate = charts.append("g")
       .attr("class", "x axis")
       .attr("id","xTick")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis)
-  var yAxisUpdate = svg.append("g")
+  var yAxisUpdate = charts.append("g")
       .attr("class", "y axis")
       .attr("id","yTick")
       .attr("transform", "translate(30,0)")
       .call(yAxis)
-  var legend = svg.selectAll(".legend")
+  var legend = charts.selectAll(".legend")
       .data(sales.map(function(d,i) { return region[i]; }))
   .enter().append("g")
       .attr("class", "legend")
@@ -204,21 +206,21 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
         sales.push(d.values[value])
       }
       return Math.max.apply(Math, sales)})]);
-      svg.select("#title")
+      charts.select("#title")
             .attr("x", (width / 2))
             .attr("y", 0)
             .attr("text-anchor", "middle")
             .style("font-size", "16px")
             .style("text-decoration", "underline")
             .text("Sales vs " + indVar );
-      svg.select("#xAxis")
+      charts.select("#xAxis")
           .attr("class", "x label")
           .attr("x", width / 2)
           .attr("y", height + 70)
           .attr("font-size","16px")
           .style("text-anchor", "middle")
           .text(indVar);
-      svg.select("#yAxis")
+      charts.select("#yAxis")
           .attr("class", "y label")
           .attr("transform","rotate(-90)")
           .attr("x", -height/2)
@@ -226,7 +228,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
           .attr("font-size","16px")
           .style("text-anchor", "middle")
           .text("Sales(Millions)");
-      xAxisUpdate = svg.select("#xTick")
+      xAxisUpdate = charts.select("#xTick")
           .attr("class", "x axis")
           .attr("transform", "translate(0," + height + ")")
           .transition().duration(1500).ease("sin-in-out")
@@ -236,7 +238,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
         .attr("dx", "-.8em")
         .attr("dy", ".15em")
         .attr("transform", "rotate(-45)" );
-      yAxisUpdate = svg.select("#yTick")
+      yAxisUpdate = charts.select("#yTick")
           .attr("class", "y axis")
           .attr("transform", "translate(30,0)")
           .transition().duration(1500).ease("sin-in-out")
@@ -252,7 +254,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
       sales.push(dict)
     }
     d3.selectAll(".slice").remove();
-    slice = svg.selectAll(".slice").data(data)
+    slice = charts.selectAll(".slice").data(data)
     slice
       .enter().append("g")
       .attr("class", "slice")

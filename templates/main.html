@@ -1,0 +1,124 @@
+<html>
+
+  <head>
+    <style>
+    body {
+      font: 10px sans-serif;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+
+
+    .d3-tip {
+      line-height: 1;
+      font-weight: bold;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      border-radius: 2px;
+    }
+
+    /* Creates a small triangle extender for the tooltip */
+    .d3-tip:after {
+      box-sizing: border-box;
+      display: inline;
+      font-size: 10px;
+      width: 100%;
+      line-height: 1;
+      color: rgba(0, 0, 0, 0.8);
+      content: "\25BC";
+      position: absolute;
+      text-align: center;
+    }
+
+    /* Style northward tooltips differently */
+    .d3-tip.n:after {
+      margin: -1px 0 0 0;
+      top: 100%;
+      left: 0;
+    }
+    </style>
+    <title>
+
+      Video Game Data
+
+    </title>
+
+    <link rel="stylesheet" type="text/css" href="static/font.css">
+    <link rel="stylesheet" type="text/css" href="static/background.css">
+    <link rel="stylesheet" type="text/css" href="static/radiobuttons.css">
+
+  </head>
+
+  <body>
+
+    <br>
+    <br>
+
+    <center>
+
+    <input type="radio" name="graphtype" id="piechoice" value="pie" checked="checked" onclick = "showPie();"> Pie Graph
+    <input type="radio" name="graphtype" id="barchoice"value="bar" onclick = "showBar();"> Bar Graph
+
+    </center>
+
+    <br>
+
+    <table style="width: 100%">
+      <tr>
+        <td>
+          <div style="padding-left: 75px; float: left">
+            <h3>Sort by</h3>
+            <input id="platformc" name="sorttype" type="radio" checked="checked"/> Platform <br>
+            <input id="genrec" name="sorttype" type="radio"/> Genre <br>
+            <input id="releasec" name="sorttype" type="radio"/> Release <br>
+            <input id="publisherc" name="sorttype" type="radio"/> Publisher <br>
+            <input id="developerc" name="sorttype" type="radio"/> Developer <br>
+            <input id="ratingc" name="sorttype" type="radio"/> Rating <br>
+          </div>
+        </td>
+
+        <td style="width: 10%">
+        </td>
+
+        <td style="max-width: 200px; padding-right: 50px; vertical-align: top; text-align: right;">
+          <p id="chartchoiceP" style="padding-top: 18px">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc euismod mauris ut metus rutrum porta. Quisque sed elit at diam porttitor tempor. Vivamus porttitor, nunc id faucibus tristique, risus tellus finibus massa, ut molestie urna augue sit amet risus. Sed non ullamcorper enim, et semper libero. Integer id imperdiet dui.
+          </p>
+        </td>
+      </tr>
+    </table>
+    <div id = "pie">
+      <center><h1>Video Game Data</h1>
+        <div id="donut-charts"></div></center>
+    </div>
+    <div id = "bar" class = "hide">
+      <center><h1>Customizable Bar Graph</h1>
+        <h3> Choose a Category to See Sales For </h3>
+        <select id="indVar">
+          <option value="Genre">Genre</option>
+          <option value="Publisher">Publisher</option>
+          <option value="Year">Year of Release</option>
+          <option value="Developer">Developer</option>
+          <option value="Rating">ESRB Rating</option>
+          <option value="Platform">Platform</option>
+          <option value="Critic Score">Metacritic Score</option>
+        </select><br><br>
+        <button id = "change"> Submit </button>
+        <div id="bar-graph"></div></center>
+    </div>
+  </body>
+  <script type="text/javascript" src="static/chartchoiceP.js"></script>
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+  <script src = "/static/donut.js"></script>
+  <script src = "/static/barGraph.js"></script>
+
+</html>

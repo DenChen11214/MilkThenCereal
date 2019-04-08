@@ -7,7 +7,7 @@ app.config['SECRET_KEY'] = os.urandom(32)
 
 @app.route("/")
 def root():
-    return render_template("demo.html")
+    return render_template("main.html")
 
 @app.route('/donut')
 def donut():
