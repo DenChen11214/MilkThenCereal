@@ -50,6 +50,7 @@
 
     </title>
 
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="static/font.css">
     <link rel="stylesheet" type="text/css" href="static/background.css">
     <link rel="stylesheet" type="text/css" href="static/radiobuttons.css">
@@ -59,68 +60,72 @@
   <body>
 
     <br>
-    <center><h1>Video Game Data</h1></center>
     <br>
 
     <center>
 
-    <input type="radio" name="graphtype" id="piechoice" value="pie" checked="checked" onclick = "showPie();"> Pie Graph
-    <input type="radio" name="graphtype" id="barchoice"value="bar" onclick = "showBar();"> Bar Graph
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class='btn btn-secondary active' onclick = "showPie();" style = 'color: #00FF00'>
+          <input type="radio" name="graphtype" id="piechoice" value="pie" checked="checked"> Pie Graph
+        </label>
+        <label class='btn btn-secondary' onclick = "showBar();" style = 'color: #00FF00'>
+          <input type="radio" name="graphtype" id="barchoice" value="bar"> Bar Graph
+        </label>
+      </div>
 
     </center>
+
+    <br>
+
+    <table style="width: 100%">
+      <tr>
+
+        <td style="width: 10%">
+        </td>
+
+        <td style="max-width: 200px; padding-right: 50px; vertical-align: top; text-align: right;">
+          <p id="chartchoiceP" style="padding-top: 18px">
+            This is an interactive pie chart. You can choose the divide sections
+            of the pie chart into different categories based on what you select
+            on the drop down below. Hover over sections of the pie chart to see
+            the number and percentage of games occupied by it. If you click on
+            the section, a list of games will appear. You can click on at most
+            two sections to compare the games contained side by side. You can
+            only select at most 2 sections at a time! To reset the pie chart
+            just click the center.
+          </p>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <br>
+    <br>
     <div id = "pie">
-        <table style="width: 100%">
-          <tr>
-
-            <td style="width: 10%">
-            </td>
-
-            <td style="max-width: 200px; padding-right: 50px; vertical-align: top; text-align: right;">
-              <p id="chartchoiceP" style="padding-top: 18px">
-                This is an interactive pie chart. You can choose the divide sections
-                of the pie chart into different categories based on what you select
-                on the drop down below. Hover over sections of the pie chart to see
-                the number and percentage of games occupied by it. If you click on
-                the section, a list of games will appear. You can click on at most
-                two sections to compare the games contained side by side. You can
-                only select at most 2 sections at a time! To reset the pie chart
-                just click the center.
-              </p>
-            </td>
-          </tr>
-        </table>
-        <div style="padding-left: 75px; float: left">
+      <center><h1>Video Game Data</h1>
+        <div style="padding-left: 75px; float: left" id="changePie">
           <h3>Sort by</h3>
-          <select id="indVarPie">
-            <option value="Genre">Genre</option>
-            <option value="Year_of_Release">Year of Release</option>
-            <option value="Rating">ESRB Rating</option>
-            <option value="Platform">Platform</option>
-            <option value="Critic_Score">Metacritic Score</option>
-          </select>
-          <button id = "changePie"> Submit </button>
+          <div class="btn-group-vertical btn-group-toggle" data-toggle="buttons" id='pieBtns'>
+            <label class='btn btn-secondary active' style='color: #00FF00'>
+              <input type="radio" name="graphtype" value="Genre" checked="checked"> Genre
+            </label>
+            <label class='btn btn-secondary' style='color: #00FF00'>
+              <input type="radio" name="graphtype" value="Year_of_Release"> Year of Release
+            </label>
+            <label class='btn btn-secondary' style='color: #00FF00'>
+              <input type="radio" name="graphtype" value="Rating"> ESRB Rating
+            </label>
+            <label class='btn btn-secondary' style='color: #00FF00'>
+              <input type="radio" name="graphtype" value="Platform"> Platform
+            </label>
+            <label class='btn btn-secondary' style='color: #00FF00'>
+              <input type="radio" name="graphtype" value="Critic_Score"> Metacritic Score
+            </label>
+          </div>
         </div>
-        <center><div id="donut-charts"></div></center>
+        <div id="donut-charts"></div></center>
     </div>
     <div id = "bar" class = "hide">
-      <table style="width: 100%">
-        <tr>
-
-          <td style="width: 10%">
-          </td>
-
-          <td style="max-width: 200px; padding-right: 50px; vertical-align: top; text-align: right;">
-            <p id="chartchoiceB" style="padding-top: 18px">
-              This is an interactive bar graph. You can choose a category in the dropdown,
-              and the graph will change to create a bar graph of Sales vs The Category You Chose.
-              There are four different colored bars representing different regions for each item
-              in the category you chose. Hover over a bar to see the number of sales for that
-              item in that specific region.
-
-            </p>
-          </td>
-        </tr>
-      </table>
+      <center><h1>Customizable Bar Graph</h1>
         <div style="padding-left: 75px; float: left">
           <h3>Sort by</h3>
           <select id="indVarBar">
@@ -134,7 +139,7 @@
           </select>
           <button id = "changeBar"> Submit </button>
         </div>
-        <center><div id="bar-graph"></div></center>
+        <div id="bar-graph"></div></center>
     </div>
   </body>
   <script type="text/javascript" src="static/chartchoiceP.js"></script>
@@ -143,5 +148,6 @@
   <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
   <script src = "/static/donut.js"></script>
   <script src = "/static/barGraph.js"></script>
+  <script src = 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
 
 </html>

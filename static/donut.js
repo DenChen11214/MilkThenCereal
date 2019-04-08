@@ -1,67 +1,71 @@
 var filename = 'data/VideoGameSales.csv';
 var salesData;
 var prevClicked = -1;
-var indVarPie = "Platform"
+var indVarPie = "Platform";
+var numCat = 15;
 
 d3.csv(filename, function(error, givenData) {
-  var changeBut = document.getElementById("changePie")
-  changeBut.addEventListener("click",function(e){
-    d3.select("#donut-charts").html("");
-    indVarPie = document.getElementById("indVarPie").value
-    var dataset = new Array();
-    var data = new Array();
-    var categories = {};
-    var gamesInSection = {};
-    var total = 0;
-    for (let i of givenData){
-      var sample = i[indVarPie];
-      total += 1;
-      if (!(sample in categories)){
-        categories[sample] = 1;
+  //var changeBut = document.getElementById("changePie")
+  for (let i of document.getElementById('pieBtns').children) {
+    i.addEventListener( "click", function(e){
+      d3.select("#donut-charts").html("");
+      indVarPie = i.children[0].value;
+      var dataset = new Array();
+      var data = new Array();
+      var categories = {};
+      var gamesInSection = {};
+      var total = 0;
+      for (let i of givenData){
+        var sample = i[indVarPie];
+        total += 1;
+        if (!(sample in categories)){
+          categories[sample] = 1;
+        }
+        else{
+          categories[sample] = categories[sample] + 1;
+        }
+        if (!(sample in gamesInSection)){
+          var arr = new Array();
+          arr.push(i);
+          gamesInSection[sample] = arr;
+        }
+        else{
+          (gamesInSection[sample]).push(i);
+        }
       }
-      else{
-        categories[sample] = categories[sample] + 1;
+      for (var j in categories){
+        data.push({
+          "cat": j,
+          "val": categories[j],
+          "games": gamesInSection[j]
+        })
       }
-      if (!(sample in gamesInSection)){
-        var arr = new Array();
-        arr.push(i);
-        gamesInSection[sample] = arr;
+      var type = [indVarPie];
+      var unit = [' Games'];
+      dataset.push({
+        "type": type[0],
+        "unit": unit[0],
+        "data": data,
+        "total": Math.round(total)
+      });
+      console.log(dataset)
+      if(indVarPie == "Publisher" || indVarPie == "Developer"){
+        dataset[0]["data"] = dataset[0]["data"].splice(0,15)
       }
-      else{
-        (gamesInSection[sample]).push(i);
+      if(indVarPie == "Year_of_Release"){
+        dataset[0]["data"].pop()
       }
-    }
-    for (var j in categories){
-      data.push({
-        "cat": j,
-        "val": categories[j],
-        "games": gamesInSection[j]
-      })
-    }
-    var type = [indVarPie];
-    var unit = [' Games'];
-    dataset.push({
-      "type": type[0],
-      "unit": unit[0],
-      "data": data,
-      "total": Math.round(total)
+      if(indVarPie == "Critic_Score"){
+        console.log(dataset[0]["data"].length)
+        dataset[0]["data"].pop()
+        dataset[0]["data"] = dataset[0]["data"].splice(-20)
+      }
+      //console.log(dataset)
+      numCat = dataset[0].data.length;
+      var donuts = new DonutCharts();
+      donuts.create(dataset);
     });
-    console.log(dataset)
-    if(indVarPie == "Publisher" || indVarPie == "Developer"){
-      dataset[0]["data"] = dataset[0]["data"].splice(0,15)
-    }
-    if(indVarPie == "Year_of_Release"){
-      dataset[0]["data"].pop()
-    }
-    if(indVarPie == "Critic_Score"){
-      console.log(dataset[0]["data"].length)
-      dataset[0]["data"].pop()
-      dataset[0]["data"] = dataset[0]["data"].splice(-20)
-    }
-    console.log(dataset)
-    var donuts = new DonutCharts();
-    donuts.create(dataset);
-  });
+  }
   //salesData = data;
   var dataset = new Array();
   var data = new Array();
@@ -145,7 +149,7 @@ function DonutCharts() {
         color = function(i){
             // console.log(i);
             // var outColor = "#" + Math.floor(Math.random()*16777215).toString(16);
-            var perc = i / 15.;
+            var perc = i / numCat;
             var outColor = 'hsl(' + Math.round(perc * 360) + ', 100%, 50%)';
             // console.log(outColor);
             return outColor;
