@@ -17,10 +17,14 @@ async function update(s){
 	}
 }
 function showPie(){
+	d3.select('#pie').transition().duration(700).style("opacity","1");
+	d3.select('#bar').transition().duration(700).style("opacity","0");
   document.getElementById('pie').style.display ='block';
   document.getElementById('bar').style.display ='none';
 }
 function showBar(){
+	d3.select('#pie').transition().duration(700).style("opacity","0");
+	d3.select('#bar').transition().duration(700).style("opacity","1");
   document.getElementById('pie').style.display ='none';
   document.getElementById('bar').style.display = 'block';
 }

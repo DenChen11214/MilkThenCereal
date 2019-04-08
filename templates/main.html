@@ -75,12 +75,16 @@
         <td>
           <div style="padding-left: 75px; float: left">
             <h3>Sort by</h3>
-            <input id="platformc" name="sorttype" type="radio" checked="checked"/> Platform <br>
-            <input id="genrec" name="sorttype" type="radio"/> Genre <br>
-            <input id="releasec" name="sorttype" type="radio"/> Release <br>
-            <input id="publisherc" name="sorttype" type="radio"/> Publisher <br>
-            <input id="developerc" name="sorttype" type="radio"/> Developer <br>
-            <input id="ratingc" name="sorttype" type="radio"/> Rating <br>
+            <select id="indVar">
+              <option value="Genre">Genre</option>
+              <option value="Publisher">Publisher</option>
+              <option value="Year">Year of Release</option>
+              <option value="Developer">Developer</option>
+              <option value="Rating">ESRB Rating</option>
+              <option value="Platform">Platform</option>
+              <option value="Critic Score">Metacritic Score</option>
+            </select>
+            <button id = "change"> Submit </button>
           </div>
         </td>
 
@@ -94,23 +98,15 @@
         </td>
       </tr>
     </table>
+    <br>
+    <br>
+    <br>
     <div id = "pie">
       <center><h1>Video Game Data</h1>
         <div id="donut-charts"></div></center>
     </div>
     <div id = "bar" class = "hide">
       <center><h1>Customizable Bar Graph</h1>
-        <h3> Choose a Category to See Sales For </h3>
-        <select id="indVar">
-          <option value="Genre">Genre</option>
-          <option value="Publisher">Publisher</option>
-          <option value="Year">Year of Release</option>
-          <option value="Developer">Developer</option>
-          <option value="Rating">ESRB Rating</option>
-          <option value="Platform">Platform</option>
-          <option value="Critic Score">Metacritic Score</option>
-        </select><br><br>
-        <button id = "change"> Submit </button>
         <div id="bar-graph"></div></center>
     </div>
   </body>
