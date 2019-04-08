@@ -137,6 +137,10 @@ function DonutCharts() {
                     .duration(1000)
                     .ease('quad')
                     .attr('transform', 'translate(' + (chart_r+chart_m) * 2 + ',' + (chart_r+chart_m) + ')');
+                d3.selectAll('.game')
+                    .transition()
+                    .duration(500)
+                    .style("opacity","0");
             }
         }
         var donuts = d3.selectAll('.donut');
