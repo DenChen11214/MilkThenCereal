@@ -50,6 +50,9 @@ d3.csv(filename, function(error, givenData) {
     if(indVarPie == "Publisher" || indVarPie == "Developer"){
       dataset[0]["data"] = dataset[0]["data"].splice(0,15)
     }
+    if(indVarPie == "Year_of_Release"){
+      dataset[0]["data"].pop()
+    }
     if(indVarPie == "Critic_Score"){
       console.log(dataset[0]["data"].length)
       dataset[0]["data"].pop()
