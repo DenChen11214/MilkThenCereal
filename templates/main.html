@@ -9,7 +9,7 @@
     .axis path,
     .axis line {
       fill: none;
-      stroke: #000;
+      stroke: #00FF00;
       shape-rendering: crispEdges;
     }
 
@@ -76,32 +76,29 @@
     </center>
 
     <br>
-
-    <table style="width: 100%">
-      <tr>
-
-        <td style="width: 10%">
-        </td>
-
-        <td style="max-width: 200px; padding-right: 50px; vertical-align: top; text-align: right;">
-          <p id="chartchoiceP" style="padding-top: 18px">
-            This is an interactive pie chart. You can choose the divide sections
-            of the pie chart into different categories based on what you select
-            on the drop down below. Hover over sections of the pie chart to see
-            the number and percentage of games occupied by it. If you click on
-            the section, a list of games will appear. You can click on at most
-            two sections to compare the games contained side by side. You can
-            only select at most 2 sections at a time! To reset the pie chart
-            just click the center.
-          </p>
-        </td>
-      </tr>
-    </table>
-    <br>
-    <br>
+    <center><h1>Video Game Data</h1>
     <br>
     <div id = "pie">
-      <center><h1>Video Game Data</h1>
+        <table style="width: 100%">
+          <tr>
+
+            <td style="width: 10%">
+            </td>
+
+            <td style="max-width: 200px; padding-right: 50px; vertical-align: top; text-align: right;">
+              <p id="chartchoiceP" style="padding-top: 18px">
+                This is an interactive pie chart. You can choose the divide sections
+                of the pie chart into different categories based on what you select
+                on the drop down below. Hover over sections of the pie chart to see
+                the number and percentage of games occupied by it. If you click on
+                the section, a list of games will appear. You can click on at most
+                two sections to compare the games contained side by side. You can
+                only select at most 2 sections at a time! To reset the pie chart
+                just click the center.
+              </p>
+            </td>
+          </tr>
+        </table>
         <div style="padding-left: 75px; float: left" id="changePie">
           <h3>Sort by</h3>
           <div class="btn-group-vertical btn-group-toggle" data-toggle="buttons" id='pieBtns'>
@@ -125,7 +122,24 @@
         <div id="donut-charts"></div></center>
     </div>
     <div id = "bar" class = "hide">
-      <center><h1>Customizable Bar Graph</h1>
+      <table style="width: 100%">
+        <tr>
+
+          <td style="width: 10%">
+          </td>
+
+          <td style="max-width: 200px; padding-right: 50px; vertical-align: top; text-align: right;">
+            <p id="chartchoiceB" style="padding-top: 18px">
+              This is an interactive bar graph. You can choose a category in the dropdown,
+              and the graph will change to create a bar graph of Sales vs The Category You Chose.
+              There are four different colored bars representing different regions for each item
+              in the category you chose. Hover over a bar to see the number of sales for that
+              item in that specific region.
+
+            </p>
+          </td>
+        </tr>
+      </table>
         <div style="padding-left: 75px; float: left">
           <h3>Sort by</h3>
           <div class="btn-group-vertical btn-group-toggle" data-toggle="buttons" id='barBtns'>

@@ -91,6 +91,10 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
         if(indVarBar == "Year_of_Release"){
           nested_data = nested_data.slice(6,21)
         }
+        if(indVarBar == "Rating"){
+        nested_data.splice(4,1)
+      }
+
         criticScores = [{ "key": "20-29", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
                         { "key": "30-39", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
                         { "key": "40-49", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
@@ -148,12 +152,14 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
         .attr("x", (width / 2))
         .attr("id", "title")
         .attr("y", 0)
+        .attr("stroke","#00FF00")
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
         .style("text-decoration", "underline")
         .text("Sales vs " + indVarBar );
   charts.append("text")
       .attr("class", "x label")
+      .attr("stroke","#00FF00")
       .attr("id","xAxis")
       .attr("x", width / 2)
       .attr("y", height + 40)
@@ -162,6 +168,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
       .text(indVarBar);
   charts.append("text")
       .attr("class", "y label")
+      .attr("stroke","#00FF00")
       .attr("id", "yAxis")
       .attr("transform","rotate(-90)")
       .attr("x", -height/2)
@@ -172,11 +179,13 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
   var xAxisUpdate = charts.append("g")
       .attr("class", "x axis")
       .attr("id","xTick")
+      .attr("stroke","#00FF00")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis)
   var yAxisUpdate = charts.append("g")
       .attr("class", "y axis")
       .attr("id","yTick")
+      .attr("stroke","#00FF00")
       .attr("transform", "translate(30,0)")
       .call(yAxis)
   var legend = charts.selectAll(".legend")
@@ -194,6 +203,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
 
   legend.append("text")
       .attr("x", width - 24)
+      .attr("stroke","#00FF00")
       .attr("y", 9)
       .attr("dy", ".35em")
       .style("text-anchor", "end")
@@ -217,6 +227,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
             .attr("text-anchor", "middle")
             .style("font-size", "16px")
             .style("text-decoration", "underline")
+            .attr("stroke","#00FF00")
             .text("Sales vs " + indVarBar );
       charts.select("#xAxis")
           .attr("class", "x label")
@@ -224,11 +235,13 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
           .attr("y", height + 70)
           .attr("font-size","16px")
           .style("text-anchor", "middle")
+          .attr("stroke","#00FF00")
           .text(indVarBar);
       charts.select("#yAxis")
           .attr("class", "y label")
           .attr("transform","rotate(-90)")
           .attr("x", -height/2)
+          .attr("stroke","#00FF00")
           .attr("y", -15)
           .attr("font-size","16px")
           .style("text-anchor", "middle")
@@ -236,6 +249,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
       xAxisUpdate = charts.select("#xTick")
           .attr("class", "x axis")
           .attr("transform", "translate(0," + height + ")")
+          .attr("stroke","#00FF00")
           .transition().duration(1500).ease("sin-in-out")
           .call(xAxis)
       xAxisUpdate.selectAll("text")

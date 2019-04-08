@@ -55,6 +55,9 @@ d3.csv(filename, function(error, givenData) {
       if(indVarPie == "Year_of_Release"){
         dataset[0]["data"].pop()
       }
+      if(indVarPie == "Rating"){
+      dataset[0]["data"].splice(5,1)
+    }
       if(indVarPie == "Critic_Score"){
         console.log(dataset[0]["data"].length)
         dataset[0]["data"].pop()
