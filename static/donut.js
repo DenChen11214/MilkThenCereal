@@ -1,9 +1,64 @@
 var filename = 'data/VideoGameSales.csv';
 var salesData;
 var prevClicked = -1;
-
+var indVar = "Platform"
 
 d3.csv(filename, function(error, givenData) {
+  var changeBut = document.getElementById("change")
+  changeBut.addEventListener("click",function(e){
+    d3.select("#donut-charts").html("");
+    indVar = document.getElementById("indVar").value
+    var dataset = new Array();
+    var data = new Array();
+    var categories = {};
+    var gamesInSection = {};
+    var total = 0;
+    for (let i of givenData){
+      var sample = i[indVar];
+      total += 1;
+      if (!(sample in categories)){
+        categories[sample] = 1;
+      }
+      else{
+        categories[sample] = categories[sample] + 1;
+      }
+      if (!(sample in gamesInSection)){
+        var arr = new Array();
+        arr.push(i);
+        gamesInSection[sample] = arr;
+      }
+      else{
+        (gamesInSection[sample]).push(i);
+      }
+    }
+    for (var j in categories){
+      data.push({
+        "cat": j,
+        "val": categories[j],
+        "games": gamesInSection[j]
+      })
+    }
+    var type = [indVar];
+    var unit = [' Games'];
+    dataset.push({
+      "type": type[0],
+      "unit": unit[0],
+      "data": data,
+      "total": Math.round(total)
+    });
+    console.log(dataset)
+    if(indVar == "Publisher" || indVar == "Developer"){
+      dataset[0]["data"] = dataset[0]["data"].splice(0,15)
+    }
+    if(indVar == "Critic_Score"){
+      console.log(dataset[0]["data"].length)
+      dataset[0]["data"].pop()
+      dataset[0]["data"] = dataset[0]["data"].splice(-20)
+    }
+    console.log(dataset)
+    var donuts = new DonutCharts();
+    donuts.create(dataset);
+  });
   //salesData = data;
   var dataset = new Array();
   var data = new Array();
@@ -11,7 +66,7 @@ d3.csv(filename, function(error, givenData) {
   var gamesInSection = {};
   var total = 0;
   for (let i of givenData){
-    var sample = i.Platform;
+    var sample = i[indVar];
     total += 1;
     if (!(sample in categories)){
       categories[sample] = 1;
@@ -28,7 +83,6 @@ d3.csv(filename, function(error, givenData) {
       (gamesInSection[sample]).push(i);
     }
   }
-  console.log(gamesInSection);
   for (var j in categories){
     data.push({
       "cat": j,
@@ -36,7 +90,7 @@ d3.csv(filename, function(error, givenData) {
       "games": gamesInSection[j]
     })
   }
-  var type = ["Platforms"];
+  var type = [indVar];
   var unit = [' Games'];
   dataset.push({
     "type": type[0],
@@ -44,7 +98,6 @@ d3.csv(filename, function(error, givenData) {
     "data": data,
     "total": Math.round(total)
   });
-  console.log(dataset);
   var donuts = new DonutCharts();
   donuts.create(dataset);
   //Data reorganization
@@ -56,16 +109,16 @@ d3.csv(filename, function(error, givenData) {
   };
 
   for (let i of data) {
-    if (!(i.Platform in platDct['data'])) {
-      platDct['data'][i.Platform] = {
+    if (!(i[indVar] in platDct['data'])) {
+      platDct['data'][i[indVar]] = {
         'games' : [],
-        'cat' : i.Platform,
+        'cat' : i[indVar],
         'val' : 0
       };
     }
-    //console.log(platDct[data.Platform]['games']);
-    platDct['data'][i.Platform]['games'].push(i);
-    platDct['data'][i.Platform]['val'] += parseFloat(i.Global_Sales);
+    //console.log(platDct[data[indVar]]['games']);
+    platDct['data'][i[indVar]]['games'].push(i);
+    platDct['data'][i[indVar]]['val'] += parseFloat(i.Global_Sales);
   }
   var datLst = [];
   for (let i of Object.keys(platDct.data)) {
@@ -294,7 +347,6 @@ function DonutCharts() {
                   //console.log("previsouly clicked " + prevClicked);
                   //console.log("now " + numClicked);
                   //console.log("current " + currDat);
-                  console.log(prevGameData);
                   if (prevClicked == 1 && numClicked == 2){
                     for (let platform of currDat){
                       if (!prevGameData.has(platform.data.cat)){
@@ -351,7 +403,7 @@ function DonutCharts() {
                           .style('text-anchor', 'start')
                           .style('font-weight', 'bold')
                           .style('fill', '#00FF00')
-                          .text(currGames[0].Platform + " games");
+                          .text(currGames[0][indVar] + " games");
 
                       games.enter().append('g')
                           .attr('class', 'game')
@@ -390,8 +442,7 @@ function DonutCharts() {
                           .style('text-anchor', 'start')
                           .style('font-weight', 'bold')
                           .style('fill', '#00FF00')
-                          .text(currGames[0].Platform + " games");
-
+                          .text(currGames[0][indVar] + " games");
                       charts.selectAll('.gamesHeader').transition()
                           .delay(1000)
                           .style('fill', '#00FF00')
@@ -431,7 +482,7 @@ function DonutCharts() {
                         .style('text-anchor', 'start')
                         .style('font-weight', 'bold')
                         .style('fill', '#00FF00')
-                        .text(currGames[currGames.length-1].Platform + " games");
+                        .text(currGames[currGames.length-1][indVar] + " games");
 
                     charts.selectAll('.gamesHeader').transition()
                         .delay(0)
@@ -478,7 +529,7 @@ function DonutCharts() {
                         .data(function(d, i) {
                           /*
                             var currDat = [{
-                              'cat' : d.Platform,
+                              'cat' : d[indVar],
                               'val' : d.Name
                             }]
                             */

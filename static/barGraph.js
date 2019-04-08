@@ -53,7 +53,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
         }
         if (indVar == "Publisher"){
           return d.Publisher;
-        }if (indVar == "Year"){
+        }if (indVar == "Year_of_Release"){
           return d.Year_of_Release;
         }
         if (indVar == "Developer"){
@@ -65,7 +65,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
         if (indVar == "Platform"){
           return d.Platform;
         }
-        if (indVar == "Critic Score"){
+        if (indVar == "Critic_Score"){
           return d.Critic_Score;
         }
       })
@@ -76,15 +76,15 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
                 "Other_Sales": d3.sum(leaves, function(d) {return parseFloat(d.Other_Sales);})}})
       .entries(data)
       .sort(function(a,b){
-        if(indVar != "Year" && indVar != "Critic Score"){
+        if(indVar != "Year_of_Release" && indVar != "Critic_Score"){
             return d3.descending((a.values.NA_Sales + a.values.EU_Sales + a.values.JP_Sales + a.values.Other_Sales),
             (b.values.NA_Sales + b.values.EU_Sales + b.values.JP_Sales + b.values.Other_Sales))
         }
       });
       if(indVar == "Developer" || indVar == "Publisher"){
-        nested_data = nested_data.slice(0,10)
+        nested_data = nested_data.slice(0,15)
       }
-      if(indVar == "Year"){
+      if(indVar == "Year_of_Release"){
         nested_data = nested_data.slice(6,21)
       }
       criticScores = [{ "key": "20-29", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
@@ -95,7 +95,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
                       { "key": "70-79", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
                       { "key": "80-89", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}},
                       { "key": "90-29", "values": {"NA_Sales": 0 , "EU_Sales": 0, "JP_Sales" : 0, "Other_Sales" : 0}}]
-      if(indVar == "Critic Score"){
+      if(indVar == "Critic_Score"){
         for(score in nested_data){
           for(var i = 2; i < 10 ;i++){
             if(parseInt(nested_data[score].key) >= i * 10 && parseInt(nested_data[score].key) < (i + 1 ) * 10){

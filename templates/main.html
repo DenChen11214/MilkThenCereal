@@ -72,28 +72,20 @@
 
     <table style="width: 100%">
       <tr>
-        <td>
-          <div style="padding-left: 75px; float: left">
-            <h3>Sort by</h3>
-            <select id="indVar">
-              <option value="Genre">Genre</option>
-              <option value="Publisher">Publisher</option>
-              <option value="Year">Year of Release</option>
-              <option value="Developer">Developer</option>
-              <option value="Rating">ESRB Rating</option>
-              <option value="Platform">Platform</option>
-              <option value="Critic Score">Metacritic Score</option>
-            </select>
-            <button id = "change"> Submit </button>
-          </div>
-        </td>
 
         <td style="width: 10%">
         </td>
 
         <td style="max-width: 200px; padding-right: 50px; vertical-align: top; text-align: right;">
           <p id="chartchoiceP" style="padding-top: 18px">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc euismod mauris ut metus rutrum porta. Quisque sed elit at diam porttitor tempor. Vivamus porttitor, nunc id faucibus tristique, risus tellus finibus massa, ut molestie urna augue sit amet risus. Sed non ullamcorper enim, et semper libero. Integer id imperdiet dui.
+            This is an interactive pie chart. You can choose the divide sections
+            of the pie chart into different categories based on what you select
+            on the drop down below. Hover over sections of the pie chart to see
+            the number and percentage of games occupied by it. If you click on
+            the section, a list of games will appear. You can click on at most
+            two sections to compare the games contained side by side. You can
+            only select at most 2 sections at a time! To reset the pie chart
+            just click the center.
           </p>
         </td>
       </tr>
@@ -103,10 +95,34 @@
     <br>
     <div id = "pie">
       <center><h1>Video Game Data</h1>
+        <div style="padding-left: 75px; float: left">
+          <h3>Sort by</h3>
+          <select id="indVar">
+            <option value="Genre">Genre</option>
+            <option value="Year_of_Release">Year of Release</option>
+            <option value="Rating">ESRB Rating</option>
+            <option value="Platform">Platform</option>
+            <option value="Critic_Score">Metacritic Score</option>
+          </select>
+          <button id = "change"> Submit </button>
+        </div>
         <div id="donut-charts"></div></center>
     </div>
     <div id = "bar" class = "hide">
       <center><h1>Customizable Bar Graph</h1>
+        <div style="padding-left: 75px; float: left">
+          <h3>Sort by</h3>
+          <select id="indVar">
+            <option value="Genre">Genre</option>
+            <option value="Publisher">Publisher</option>
+            <option value="Year_of_Release">Year of Release</option>
+            <option value="Developer">Developer</option>
+            <option value="Rating">ESRB Rating</option>
+            <option value="Platform">Platform</option>
+            <option value="Critic_Score">Metacritic Score</option>
+          </select>
+          <button id = "change"> Submit </button>
+        </div>
         <div id="bar-graph"></div></center>
     </div>
   </body>
