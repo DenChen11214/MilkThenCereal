@@ -93,3 +93,4 @@ Combined all parts onto one webpage and made the transitioning between the bar g
 dennisC -- 2019-04-08 18:00
 --------------------------------------------------------------
 - Made user be able to choose category of pie chart
+- Added description for bar graph
