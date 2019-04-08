@@ -89,18 +89,8 @@ function DonutCharts() {
         color = function(i){
             // console.log(i);
             // var outColor = "#" + Math.floor(Math.random()*16777215).toString(16);
-            var start = [33, 165, 227];
-            var end = [241, 249, 253];
-            var maxDst = [];
-            var delta = [];
-            var finColor = [];
             var perc = i / 15.;
-            for (var j = 0; j < 3; j++) {
-              maxDst.push(end[j] - start[j]);
-              delta.push(maxDst[j] * perc);
-              finColor.push(Math.round(start[j] + delta[j]));
-            }
-            var outColor = 'rgb(' + finColor[0] + ',' + finColor[1] + ',' + finColor[2] + ')';
+            var outColor = 'hsl(' + Math.round(perc * 360) + ', 100%, 50%)';
             // console.log(outColor);
             return outColor;
         };
