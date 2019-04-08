@@ -343,17 +343,20 @@ function DonutCharts() {
                       charts.select('.mainChart').append('g')
                           .attr('class', 'gamesHeader')
                           .style('opacity', '1')
+                          .style('fill', '#00FF00')
                           .append('text')
                           .attr('x', (chart_r + chart_m) * 2)
                           .attr('y', 9)
                           .attr('dy', '.35em')
                           .style('text-anchor', 'start')
                           .style('font-weight', 'bold')
+                          .style('fill', '#00FF00')
                           .text(currGames[0].Platform + " games");
 
                       games.enter().append('g')
                           .attr('class', 'game')
                           .attr('transform', function(d,i) { return "translate(0," + (20 + i * 20) + ")"; })
+                          .style('fill', '#00FF00')
                           .style('opacity', '0');
 
                       games.append('text')
@@ -361,6 +364,7 @@ function DonutCharts() {
                           .attr('y', 9)
                           .attr('dy', ".35em")
                           .style('text-anchor', 'start')
+                          .style('fill', '#00FF00')
                           .text(function(d,i) {return d.Name;});
 
                       games.transition()
@@ -378,21 +382,25 @@ function DonutCharts() {
                       charts.select('.mainChart').append('g')
                           .attr('class', 'gamesHeader')
                           .style('opacity', '0')
+                          .style('fill', '#00FF00')
                       .append('text')
                           .attr('x', (chart_r + chart_m) * 2)
                           .attr('y', 9)
                           .attr('dy', '.35em')
                           .style('text-anchor', 'start')
                           .style('font-weight', 'bold')
+                          .style('fill', '#00FF00')
                           .text(currGames[0].Platform + " games");
 
                       charts.selectAll('.gamesHeader').transition()
                           .delay(1000)
+                          .style('fill', '#00FF00')
                           .style("opacity","1");
 
                       games.enter().append('g')
                           .attr('class', 'game')
                           .attr('transform', function(d,i) { return "translate(0," + (20 + i * 20) + ")"; })
+                          .style('fill', '#00FF00')
                           .style('opacity', '0');
 
                       games.append('text')
@@ -400,10 +408,12 @@ function DonutCharts() {
                           .attr('y', 9)
                           .attr('dy', ".35em")
                           .style('text-anchor', 'start')
+                          .style('fill', '#00FF00')
                           .text(function(d,i) {return d.Name;});
 
                       games.transition()
                           .delay(function(d,i){ return 1010 + 10 * i; })
+                          .style('fill', '#00FF00')
                           .style("opacity","1");
                     }
 
@@ -413,12 +423,14 @@ function DonutCharts() {
                     charts.select('.mainChart').append('g')
                         .attr('class', 'gamesHeader')
                         .style('opacity', '0')
+                        .style('fill', '#00FF00')
                     .append('text')
                         .attr('x', (chart_r + chart_m) * 3)
                         .attr('y', 9)
                         .attr('dy', '.35em')
                         .style('text-anchor', 'start')
                         .style('font-weight', 'bold')
+                        .style('fill', '#00FF00')
                         .text(currGames[currGames.length-1].Platform + " games");
 
                     charts.selectAll('.gamesHeader').transition()
@@ -428,6 +440,7 @@ function DonutCharts() {
                     games.enter().append('g')
                         .attr('class', 'game')
                         .attr('transform', function(d,i) { return "translate(0," + (20 + i * 20) + ")"; })
+                        .style('fill', '#00FF00')
                         .style('opacity', '0');
 
                     games.append('text')
@@ -435,6 +448,7 @@ function DonutCharts() {
                         .attr('y', 9)
                         .attr('dy', ".35em")
                         .style('text-anchor', 'start')
+                        .style('fill', '#00FF00')
                         .text(function(d,i) {return d.Name;});
 
                     games.transition()
