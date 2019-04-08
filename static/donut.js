@@ -272,123 +272,129 @@ function DonutCharts() {
                 ///////////////////////////////////////////////////////////////////////
                 var currGames = [];
                 var thisPath = d3.select(this);
-                var clicked = thisPath.classed('clicked');
-                pathAnim(thisPath, ~~(!clicked));
-                thisPath.classed('clicked', !clicked);
-                // DISPLAYING GAMES /////////////////////////////////////////////
-                setCenterText(thisDonut);
-                var currSections = [];
-                prevGameData.clear();
-                for (let platform of currDat){
-                  prevGameData.add(platform.data.cat);
-                }
-                currDat = thisDonut.selectAll('.clicked').data();
+                if (thisDonut.selectAll('.clicked')[0].length == 2 && thisPath.attr("class") != 'clicked' ){
 
-                //////////////////////////////////////////////////
-                if (prevClicked === -1){
-                  prevClicked = thisDonut.selectAll('.clicked')[0].length;
-                } else{
-                  prevClicked = numClicked;
                 }
-                numClicked = thisDonut.selectAll('.clicked')[0].length;
-                //console.log("previsouly clicked " + prevClicked);
-                //console.log("now " + numClicked);
-                //console.log("current " + currDat);
-                console.log(prevGameData);
-                if (prevClicked == 1 && numClicked == 2){
+                else{
+                  var clicked = thisPath.classed('clicked');
+                  pathAnim(thisPath, ~~(!clicked));
+                  thisPath.classed('clicked', !clicked);
+                  setCenterText(thisDonut);
+                  var currSections = [];
+                  prevGameData.clear();
                   for (let platform of currDat){
-                    if (!prevGameData.has(platform.data.cat)){
+                    prevGameData.add(platform.data.cat);
+                  }
+                  currDat = thisDonut.selectAll('.clicked').data();
+
+                  //////////////////////////////////////////////////
+                  if (prevClicked === -1){
+                    prevClicked = thisDonut.selectAll('.clicked')[0].length;
+                  } else{
+                    prevClicked = numClicked;
+                  }
+                  numClicked = thisDonut.selectAll('.clicked')[0].length;
+                  //console.log("previsouly clicked " + prevClicked);
+                  //console.log("now " + numClicked);
+                  //console.log("current " + currDat);
+                  console.log(prevGameData);
+                  if (prevClicked == 1 && numClicked == 2){
+                    for (let platform of currDat){
+                      if (!prevGameData.has(platform.data.cat)){
+                        for (let game of platform.data.games) {
+                          currGames.push(game);
+                        }
+                      }
+                      //console.log(currGames);
+                    }
+                  }
+                  else{
+                    for (let platform of currDat) { //Create list of selected games
                       for (let game of platform.data.games) {
                         currGames.push(game);
                       }
                     }
-                    //console.log(currGames);
                   }
-                }
-                else{
-                  for (let platform of currDat) { //Create list of selected games
-                    for (let game of platform.data.games) {
-                      currGames.push(game);
-                    }
-                  }
-                }
-                var games = charts.select('.mainChart').selectAll('.g')
-                                .data(currGames);
-                //console.log(currGames);
-                if (numClicked == 0) { //Activated upon deselection of everything
-                  d3.selectAll('.game')
-                      .transition()
-                      .duration(500)
-                      .style("opacity","0");
-                  d3.select('.donut') //Move donut back to center
-                      .transition()
-                      .duration(1000)
-                      .ease('quad')
-                      .attr('transform', 'translate(' + (chart_r+chart_m) * 2 + ',' + (chart_r+chart_m) + ')');
-                } else if (numClicked == 1) { //Activated once
-                  if (prevClicked == 2){
+                  var games = charts.select('.mainChart').selectAll('.g')
+                                  .data(currGames);
+                  //console.log(currGames);
+                  if (numClicked == 0) { //Activated upon deselection of everything
                     d3.selectAll('.game')
                         .transition()
+                        .duration(500)
                         .style("opacity","0");
-                    games.enter().append('g')
-                        .attr('class', 'game')
-                        .attr('transform', function(d,i) { return "translate(0," + i * 20 + ")"; })
-                        .style('opacity', '0');
-
-                    games.append('text')
-                        .attr('x', (chart_r+chart_m) * 2)
-                        .attr('y', 9)
-                        .attr('dy', ".35em")
-                        .style('text-anchor', 'start')
-                        .text(function(d,i) {return d.Name;});
-
-                    games.transition()
-                        .delay(function(d,i){ return 10 * i; })
-                        .style("opacity","1");
-                  }
-                  else{
-                    d3.select('.donut') //Move donut to the left
+                    d3.select('.donut') //Move donut back to center
                         .transition()
-                        .duration(1000)
+                        .duration(800)
                         .ease('quad')
-                        .attr('transform', 'translate(' + (chart_r+chart_m) + ',' + (chart_r+chart_m) + ')');
+                        .attr('transform', 'translate(' + (chart_r+chart_m) * 2 + ',' + (chart_r+chart_m) + ')');
+                  } else if (numClicked == 1) { //Activated once
+                    if (prevClicked == 2){
+                      d3.selectAll('.game')
+                          .transition()
+                          .style("opacity","0");
+                      games.enter().append('g')
+                          .attr('class', 'game')
+                          .attr('transform', function(d,i) { return "translate(0," + i * 20 + ")"; })
+                          .style('opacity', '0');
 
+                      games.append('text')
+                          .attr('x', (chart_r+chart_m) * 2)
+                          .attr('y', 9)
+                          .attr('dy', ".35em")
+                          .style('text-anchor', 'start')
+                          .text(function(d,i) {return d.Name;});
+
+                      games.transition()
+                          .delay(function(d,i){ return 10 * i; })
+                          .style("opacity","1");
+                    }
+                    else{
+                      d3.select('.donut') //Move donut to the left
+                          .transition()
+                          .duration(1000)
+                          .ease('quad')
+                          .attr('transform', 'translate(' + (chart_r+chart_m) + ',' + (chart_r+chart_m) + ')');
+
+                      games.enter().append('g')
+                          .attr('class', 'game')
+                          .attr('transform', function(d,i) { return "translate(0," + i * 20 + ")"; })
+                          .style('opacity', '0');
+
+                      games.append('text')
+                          .attr('x', (chart_r+chart_m) * 2)
+                          .attr('y', 9)
+                          .attr('dy', ".35em")
+                          .style('text-anchor', 'start')
+                          .text(function(d,i) {return d.Name;});
+
+                      games.transition()
+                          .delay(function(d,i){ return 1000 + 10 * i; })
+                          .style("opacity","1");
+                    }
+
+                  }
+                  else if (numClicked == 2){
                     games.enter().append('g')
                         .attr('class', 'game')
                         .attr('transform', function(d,i) { return "translate(0," + i * 20 + ")"; })
                         .style('opacity', '0');
 
                     games.append('text')
-                        .attr('x', (chart_r+chart_m) * 2)
+                        .attr('x', (chart_r+chart_m) * 3)
                         .attr('y', 9)
                         .attr('dy', ".35em")
                         .style('text-anchor', 'start')
                         .text(function(d,i) {return d.Name;});
 
                     games.transition()
-                        .delay(function(d,i){ return 1000 + 10 * i; })
+                        .delay(function(d,i){ return 100 + 10 * i; })
                         .style("opacity","1");
                   }
-
+              }
                 }
-                else if (numClicked == 2){
-                  games.enter().append('g')
-                      .attr('class', 'game')
-                      .attr('transform', function(d,i) { return "translate(0," + i * 20 + ")"; })
-                      .style('opacity', '0');
+                // DISPLAYING GAMES /////////////////////////////////////////////
 
-                  games.append('text')
-                      .attr('x', (chart_r+chart_m) * 3)
-                      .attr('y', 9)
-                      .attr('dy', ".35em")
-                      .style('text-anchor', 'start')
-                      .text(function(d,i) {return d.Name;});
-
-                  games.transition()
-                      .delay(function(d,i){ return 100 + 10 * i; })
-                      .style("opacity","1");
-                }
-            }
         };
         var pie = d3.layout.pie()
                         .sort(null)
