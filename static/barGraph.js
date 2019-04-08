@@ -164,6 +164,7 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
       .attr("x", width / 2)
       .attr("y", height + 40)
       .attr("font-size","16px")
+      .style("padding","50px 0px 0px 0px")
       .style("text-anchor", "middle")
       .text(indVarBar);
   charts.append("text")
