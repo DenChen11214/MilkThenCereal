@@ -34,10 +34,10 @@ var color = d3.scale.ordinal()
     .range(["#ca0020","#f4a582","#d5d5d5","#92c5de"]);
 
 var charts= d3.select('#bar-graph').append("svg")
-    .attr("width", width + margin.left + margin.right)
+    .attr("width", width + 150 + margin.right)
     .attr("height", height + margin.top + margin.bottom + 200)
   .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform", "translate(" + 150 + "," + margin.top + ")");
 
 charts.call(tip);
 
