@@ -158,16 +158,6 @@ d3.csv("/data/VideoGameSales.csv", function(error, data) {
         .style("text-decoration", "underline")
         .text("Sales vs " + indVarBar );
   charts.append("text")
-      .attr("class", "x label")
-      .attr("fill","#00FF00")
-      .attr("id","xAxis")
-      .attr("x", width / 2)
-      .attr("y", height + 40)
-      .attr("font-size","16px")
-      .style("padding","50px 0px 0px 0px")
-      .style("text-anchor", "middle")
-      .text(indVarBar);
-  charts.append("text")
       .attr("class", "y label")
       .attr("fill","#00FF00")
       .attr("id", "yAxis")
